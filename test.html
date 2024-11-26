@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three.js Model with Texture</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/TextureLoader.js"></script>
+  <script>
+    // Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Lighting
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(10, 10, 10).normalize();
+    scene.add(light);
+
+    // GLTF Loader
+    const loader = new THREE.GLTFLoader();
+
+    // Load Model
+    loader.load('assets/strs/meteor/scene.gltf', function (gltf) {
+      const model = gltf.scene;
+
+    //   // Texture Loader
+    //   const textureLoader = new THREE.TextureLoader();
+    //   const texture = textureLoader.load('assets/strs/meteor_t.png');
+
+    //   // Apply Texture
+    //   model.traverse((child) => {
+    //     if (child.isMesh) {
+    //       child.material.map = texture;
+    //     }
+    //   });
+
+      scene.add(model);
+    });
+
+    // Camera Position
+    camera.position.z = 5;
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

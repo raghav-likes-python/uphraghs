@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Uphaar</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+            body {
+                color: #cecece;
+                height: 100vh;
+                width: 100vw;
+                background: rgb(0,0,0);
+                background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(19,19,19,1) 50%, rgba(24,24,24,1) 100%);
+                font-family: "JetBrains Mono", serif;
+                display: flex;
+                justify-content: center;
+                margin: 0;
+            }
+
+            #intro-btn_w {
+                display: flex;
+                justify-content: center;
+                margin: auto;
+            } #intro-btn_w button {
+                box-shadow: -1vh -1vh #323232;
+                border: 0.4vh solid #cecece;
+                border-radius: 10%;
+                height: 10vw;
+                width: 10vw;
+                margin: 1vw;
+            } #intro-btn_w button:hover {
+                box-shadow: none;
+                transform: translate(-1vh, -1vh);
+            }
+            #intro-btn_w span {
+                color: #0c0909;
+                text-shadow: 0px 0px 1vh#fff;
+                font-size: 4vh;
+            }
+
+            #intro_w #intro-creds {
+                position: absolute;
+                bottom: 0.5vh;
+                right: 0.5vh;
+            }
+            
+            #prompt_w {
+                background-color: rgba(39, 37, 37, 0.8);
+                border: 0.5vh solid #fefefe;
+                border-radius: 6%;
+                padding: 18vh;
+                top: 15%;
+                position:absolute;
+                justify-self: center;
+            } #prompt_i {
+                height: 4vh;
+                width: 17vw;
+            } #prompt-submit {
+                padding: 0;
+                margin: 0;
+                height: 5vh;
+                width: 5vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="prompt_w">
+            <h1 id="prompt-h">Whats your name?</h1>
+            <input id="prompt_i" placeholder="Answer here..." />
+            <button id="prompt-submit" onclick="prompted();">Go</button>
+        </div>
+        <div id="intro_w">
+            <!-- shut up it works -->
+            <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Virtual Carnival</h1>
+            <div id="intro-btn_w">
+                <a href="games/blnp/index.html"><button style="background: url(assets/blnp/banner.jpg);"><span>Balloon Pop</span></button></a>
+                <a href="games/strs/index.html"><button style="background: url(assets/strs/banner.jpg);"><span>Star Shooter</span></button></a>
+                <a href="games/jump/index.html"><button style="background: url(assets/jump/banner.jpg);"><span>Get  to the other side</span></button></a>
+            </div>
+            <span id="intro-quota_w">You have used <span id="intro-quota">0</span>/2 games.</span>
+            <span id="intro-count_w"><span id="intro-count">0</span> people have played these games so far.</span>
+            <span id="intro-creds">Made with &heartsuit; by <u>Chayan</u>,<u>Raghav</u> and <u>Ajay</u>.</span>
+        </div>
+        <script>
+            /*
+            code names
+            balloon pop - blnp
+            star shoot - strs
+            3d platformer - jump
+            */ 
+            document.getElementById('intro-count').innerHTML = Number(localStorage.blnp_cnt + localStorage.strs_cnt + localStorage.jump_cnt);
+            // localStorage.setItem('plrcount', Number(localStorage.getItem('plrcount')) + 1);
+            // or u could just do localstorage.plrcount++ lol
+            if(location.search=="?devmode=true") {
+                document.getElementById('prompt_i').value = "Developer";
+                prompted();
+            }
+            function prompted() {
+                if(document.getElementById('prompt_i').value.trim()) {
+                    localStorage.plrName = document.getElementById('prompt_i').value;
+                    localStorage.plrQuota = 2;
+                    document.getElementById('prompt_w').hidden = true;
+                    document.getElementById('intro-quota').innerHTML = 2;
+                }
+            }
+
+            localStorage.plrQuota = localStorage.plrQuota-- > 0 ? localStorage.plrQuota : 0;
+            document.getElementById('intro-quota').innerHTML = localStorage.plrQuota;
+
+            if(localStorage.plrQuota > 0) {
+                // console.log('worked');
+                document.getElementById('prompt_w').hidden = true;
+            }
+        </script>
+    </body>
+</html>

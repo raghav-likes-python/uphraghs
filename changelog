@@ -1,0 +1,28 @@
+## 25-11-24 ~7:30
+- *Hypothesised ideas.*
+- Version 0.0.0 (pre-beta).
+- Added UI.
+- Added `Balloon pop game`.
+- Added python powered backend **server**.
+- Added basically everything.
+
+## 25-11-24 23:59 (actually)
+- Cleaned the code by commenting unused / ai residue.
+- Changed the file structure to my standards.
+- Completed `blnp` *(unpolished)*
+- Removed unused files.
+- Added (reuseable) playercount for `blnp`. (+ stats)
+- Added (reuseable) **unstable** leaderboard for `blnp` (+ stats)
+
+Proof it was actually 23:59
+![screenshot taken at 23:59](assets/temp_g2FL90.png)
+<br>
+P.S: There was no internet so i couldnt make a game (sorry). Instead I cleaned up your code and did the most I could.
+
+## 26-11-24 15:17
+- Revamped leaderboard to make it universal and resuable
+- Added basic functionality of the (first) 3 games
+
+## 26-11-24 20:42
+- Added 3d models (cors policy never talk to be or my son ever again)
+- Fixed `strs` gameOver()

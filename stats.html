@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>Statistics (backend)</title>
+    </head>
+    <body>
+        <h1>Statistics</h1><button onclick="location.reload();">force update</button><hr>
+        <h2>General</h2>
+        <p>Total players: <span id="ttl_cnt">0</span></p>
+        <p>Total money raised: &#8377;<span id="ttl-mn_cnt">0</span>.00</p>
+        <ul>
+            <li>blnp: <span id="blnp_cnt">0</span> : &#8377;<span id="blnp-mn_cnt">0</span>.00</li>
+            <li>strs: <span id="strs_cnt">0</span> : &#8377;<span id="strs-mn_cnt">0</span>.00</li>
+            <li>jump: <span id="jump_cnt">0</span> : &#8377;<span id="jump-mn_cnt">0</span>.00</li>
+        </ul>
+        <hr>
+        <h2>Highest scores</h2>
+        <h3>blnp</h3>
+        <ol id="blnp-lb">
+            <li><span id="blnp-t1-n">Nobody</span> : <span id="blnp-t1-s">0</span></li>
+            <li><span id="blnp-t2-n">Nobody</span> : <span id="blnp-t2-s">0</span></li>
+            <li><span id="blnp-t3-n">Nobody</span> : <span id="blnp-t3-s">0</span></li>
+            <li><span id="blnp-t4-n">Nobody</span> : <span id="blnp-t4-s">0</span></li>
+            <li><span id="blnp-t5-n">Nobody</span> : <span id="blnp-t5-s">0</span></li>
+        </ol><br>
+        <h3>strs</h3>
+        <ol id="strs-lb">
+            <li><span id="strs-t1-n">Nobody</span> : <span id="strs-t1-s">0</span></li>
+            <li><span id="strs-t2-n">Nobody</span> : <span id="strs-t2-s">0</span></li>
+            <li><span id="strs-t3-n">Nobody</span> : <span id="strs-t3-s">0</span></li>
+            <li><span id="strs-t4-n">Nobody</span> : <span id="strs-t4-s">0</span></li>
+            <li><span id="strs-t5-n">Nobody</span> : <span id="strs-t5-s">0</span></li>
+        </ol><br>
+        <h3>jump</h3>
+        <ol id="jump-lb">
+            <li><span id="jump-t1-n">Nobody</span> : <span id="jump-t1-s">0</span></li>
+            <li><span id="jump-t2-n">Nobody</span> : <span id="jump-t2-s">0</span></li>
+            <li><span id="jump-t3-n">Nobody</span> : <span id="jump-t3-s">0</span></li>
+            <li><span id="jump-t4-n">Nobody</span> : <span id="jump-t4-s">0</span></li>
+            <li><span id="jump-t5-n">Nobody</span> : <span id="jump-t5-s">0</span></li>
+        </ol><br>
+        <script>
+            function doit(id,val) {
+                document.getElementById(id).innerHTML = val;
+            }
+
+            doit("ttl_cnt",Number(localStorage.blnp_cnt + localStorage.strs_cnt + localStorage.jump_cnt));
+            doit("blnp_cnt",Number(localStorage.blnp_cnt));
+            doit("strs_cnt",Number(localStorage.strs_cnt));
+            doit("jump_cnt",Number(localStorage.jump_cnt));
+            const ticketPrice = 100;
+            doit("ttl-mn_cnt",Number(localStorage.blnp_cnt + localStorage.strs_cnt + localStorage.jump_cnt)*ticketPrice);
+            doit("blnp-mn_cnt",Number(localStorage.blnp_cnt)*ticketPrice);
+            doit("strs-mn_cnt",Number(localStorage.strs_cnt)*ticketPrice);
+            doit("jump-mn_cnt",Number(localStorage.jump_cnt)*ticketPrice);
+
+    var _ = localStorage.blnp_lb_n.split(",");
+    var __ = localStorage.blnp_lb_s.split(",");
+    document.getElementById('blnp-lb').innerHTML = `
+    <li>${_[0]}: ${__[0]}</li>
+    <li>${_[1]}: ${__[1]}</li>
+    <li>${_[2]}: ${__[2]}</li>
+    <li>${_[3]}: ${__[3]}</li>
+    <li>${_[4]}: ${__[4]}</li>
+    `; // could be optimized but im lazy
+    _ = localStorage.strs_lb_n.split(",");
+    __ = localStorage.strs_lb_s.split(",");
+    document.getElementById('strs-lb').innerHTML = `
+    <li>${_[0]}: ${__[0]}</li>
+    <li>${_[1]}: ${__[1]}</li>
+    <li>${_[2]}: ${__[2]}</li>
+    <li>${_[3]}: ${__[3]}</li>
+    <li>${_[4]}: ${__[4]}</li>
+    `; // could be optimized but im lazy
+    _ = localStorage.jump_lb_n.split(",");
+    __ = localStorage.jump_lb_s.split(",");
+    document.getElementById('jump-lb').innerHTML = `
+    <li>${_[0]}: ${__[0]}</li>
+    <li>${_[1]}: ${__[1]}</li>
+    <li>${_[2]}: ${__[2]}</li>
+    <li>${_[3]}: ${__[3]}</li>
+    <li>${_[4]}: ${__[4]}</li>
+    `; // could be optimized but im lazy
+        </script>
+    </body>
+</html>

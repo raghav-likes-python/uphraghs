@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Balloon Pop Challenge</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+
+    #tutorial {
+    display: block; /* Make sure it's visible initially */
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+    </style>
+</head>
+<body>
+    <div id="overlay">
+        <div>Score: <span id="score">0</span></div>
+        <div>Time Left: <span id="time">60</span> s</div>
+        <div>Total Players: <span id="total_players">0</span></div>
+    </div>
+
+    <!-- Tutorial -->
+    <div id="tutorial">
+        <h2>Tutorial</h2>
+        <p>Welcome to the Balloon Pop Challenge!</p>
+        <p>Click on the balloons to pop them!</p>
+        <p>Green/Yellow/Blue balloons are good - +1 point!</p>
+        <p>Red balloons are bad - -1 point!</p>
+        <p>Try to get the highest score before the time runs out!</p>
+        <iframe src="../../leaderboard.html?blnp" title="leaderboard"></iframe>
+    </div>
+
+    <!-- Player Info -->
+    <div id="player-info" style="position: absolute; top: 200px; left: 20px; color: white;">
+        <button id="start_button">Start Game</button>
+    </div>
+
+    <audio id="popSound" src="a/blnp/pop.mp3" preload="auto"></audio>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

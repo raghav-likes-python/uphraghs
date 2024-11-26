@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Space Shooter</title>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
+    canvas { display: block; }
+    #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); color: white; display: flex; align-items: center; justify-content: center; flex-direction: column; z-index: 10; }
+    #startButton { background-color: #00ff00; padding: 10px 20px; border: none; cursor: pointer; font-size: 1.5em; color: black; margin-top: 20px; }
+    #score, #health, #timer { position: fixed; top: 10px; font-size: 20px; color: white; }
+    #score { right: 10px; }
+    #health { left: 10px; }
+    #timer { left: 10px; top: 30px; }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <h1>3D Space Shooter</h1>
+    <p>Use WASD or Arrow Keys to move, Spacebar to shoot.</p>
+    <button id="startButton">Start Game</button>
+    <br><br>
+    <iframe src="../../leaderboard.html?strs" description="leaderboard"></iframe>
+  </div>
+  <div id="score">Score: 0</div>
+  <div id="health">Health: 100</div>
+  <div id="timer">Time left: 60s</div>
+  <!-- Audio Elements -->
+  <audio id="shootSound" src="shoot.mp3"></audio>
+  <audio id="collisionSound" src="explosion.mp3"></audio>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

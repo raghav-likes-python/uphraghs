@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leaderboard</title>
+        <style>
+            body {
+                background: rgb(0,0,0);
+                /* background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(19,19,19,1) 50%, rgba(24,24,24,1) 100%); */
+                /* height: 100%;
+                width: 100%;
+                margin: 0; */
+                color: #cecece;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- <h1>Leaderboard</h1> -->
+        <ol id="list">
+            <li>Nobody: 0</li>
+            <li>Nobody: 0</li>
+            <li>Nobody: 0</li>
+            <li>Nobody: 0</li>
+            <li>Nobody: 0</li>
+        </ol>
+        <script>
+            const list = document.getElementById('list');
+            data = location.search;
+            data = data.slice(1);
+            switch(data) {
+                case "blnp":
+                var _ = localStorage.blnp_lb_n.split(",");
+                var __ = localStorage.blnp_lb_s.split(",");
+                var what = `
+                <li>${_[0]}: ${__[0]}</li>
+                <li>${_[1]}: ${__[1]}</li>
+                <li>${_[2]}: ${__[2]}</li>
+                <li>${_[3]}: ${__[3]}</li>
+                <li>${_[4]}: ${__[4]}</li>
+                `; // could be optimized but im lazy
+                break;
+                case "strs":
+                var _ = localStorage.strs_lb_n.split(",");
+                var __ = localStorage.strs_lb_s.split(",");
+                var what = `
+                <li>${_[0]}: ${__[0]}</li>
+                <li>${_[1]}: ${__[1]}</li>
+                <li>${_[2]}: ${__[2]}</li>
+                <li>${_[3]}: ${__[3]}</li>
+                <li>${_[4]}: ${__[4]}</li>
+                `; // could be optimized but im lazy
+                break;
+                case "jump":
+                var _ = localStorage.jump_lb_n.split(",");
+                var __ = localStorage.jump_lb_s.split(",");
+                var what = `
+                <li>${_[0]}: ${__[0]}</li>
+                <li>${_[1]}: ${__[1]}</li>
+                <li>${_[2]}: ${__[2]}</li>
+                <li>${_[3]}: ${__[3]}</li>
+                <li>${_[4]}: ${__[4]}</li>
+                `; // could be optimized but im lazy
+                break;
+                default:
+                    console.error('dumbass');
+            }
+            if(what) {
+            list.innerHTML = what;
+            }
+        </script>
+    </body>
+</html>
