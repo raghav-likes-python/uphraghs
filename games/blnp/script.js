@@ -125,7 +125,7 @@ function updateTimer() {
 
 function endGame() {
     alert(`Game Over! Your score: ${score}`);
-    location.reload();
+
     // fetch('/submit_score', {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
@@ -154,6 +154,7 @@ function endGame() {
     localStorage.blnp_lb_n = curLbN;
     localStorage.blnp_lb_s = curLbS;
     // if this failed i was ready to kill myself
+    location.reload();
 }
 
 function fetchTopScores() {
