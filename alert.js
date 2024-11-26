@@ -1,4 +1,3 @@
-// init
 const wrap = document.createElement('div');
 const title = document.createElement('h1');
 const text = document.createElement('p');
@@ -12,7 +11,6 @@ document.body.appendChild(wrap);
 
 wrap.hidden = true;
 
-// func
 function $alert(_title,_text,_button) {
     title.innerHTML = _title ? _title : "Alert!";
     text.innerHTML = _text;
