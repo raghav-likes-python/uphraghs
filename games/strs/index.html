@@ -20,16 +20,18 @@
     <h1>3D Space Shooter</h1>
     <p>Use WASD or Arrow Keys to move, Spacebar to shoot.</p>
     <button id="startButton">Start Game</button>
+    <br><br>
+    <iframe src="../../leaderboard.html?strs" description="leaderboard"></iframe>
   </div>
   <div id="score">Score: 0</div>
   <div id="health">Health: 100</div>
   <div id="timer">Time left: 60s</div>
-
   <!-- Audio Elements -->
   <audio id="shootSound" src="shoot.mp3"></audio>
   <audio id="collisionSound" src="explosion.mp3"></audio>
-
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
   <script src="script.js"></script>
 </body>
