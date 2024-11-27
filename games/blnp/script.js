@@ -154,7 +154,6 @@ function endGame() {
     localStorage.blnp_lb_n = curLbN;
     localStorage.blnp_lb_s = curLbS;
     // if this failed i was ready to kill myself
-
     location.reload();
 }
 
