@@ -18,15 +18,12 @@ document.getElementById('startButton').onclick = startGame;
 const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
 
-var timer;
-// Hide tutorial and start game
+let timer;
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
-  timer = setInterval(function() {
+  timer = setInterval(() => {
     timerDisplay.textContent = `Time left: ${--timeLeft}s`;
-    if(timeLeft <= 0) {
-      gameOver();
-    }
+    if (timeLeft <= 0) gameOver();
   }, 1000);
   animate();
 }
@@ -56,16 +53,17 @@ function shootBullet() {
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-  shootSound.play();  // Play shooting sound
+  shootSound.play();
 }
 
-// Enemies
+// Enemies (Asteroids)
 const enemies = [];
 const loader = new THREE.GLTFLoader();
 function spawnEnemy() {
-  loader.load('../../assets/strs/meteor/scene.gltf', (gltf) => {
-    const enemy = gltf.scene.clone();
+  loader.load('assets/strs/meteor/scene.gltf', (gltf) => {
+    const enemy = gltf.scene;
     enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
+    enemy.scale.set(0.5, 0.5, 0.5);
     scene.add(enemy);
     enemies.push(enemy);
   });
@@ -82,7 +80,7 @@ function handleMovement() {
 function checkCollisions() {
   bullets.forEach((bullet, bIndex) => {
     enemies.forEach((enemy, eIndex) => {
-      if (bullet.position.distanceTo(enemy.position) < 0.5) {
+      if (bullet.position.distanceTo(enemy.position) < 1) {
         scene.remove(bullet, enemy);
         bullets.splice(bIndex, 1);
         enemies.splice(eIndex, 1);
@@ -96,7 +94,7 @@ function checkCollisions() {
 // Health Management
 function checkPlayerCollision() {
   enemies.forEach((enemy, eIndex) => {
-    if (ship.position.distanceTo(enemy.position) < 0.5) {
+    if (ship.position.distanceTo(enemy.position) < 1) {
       health -= 10;
       healthDisplay.textContent = `Health: ${health}`;
       scene.remove(enemy);
@@ -115,7 +113,7 @@ function updateScore() {
 // Level Up
 function levelUp() {
   level++;
-  spawnInterval -= 100;
+  spawnInterval -= 100;  // Increase difficulty by reducing enemy spawn interval
 }
 
 // Main game loop
