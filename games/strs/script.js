@@ -19,7 +19,7 @@ const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
 
 var timer;
-// Hide overlay and start game
+// Hide tutorial and start game
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
@@ -59,15 +59,13 @@ function shootBullet() {
   shootSound.play();  // Play shooting sound
 }
 
-// Load asteroid model
-const loader = new THREE.GLTFLoader();
+// Enemies
 const enemies = [];
-
+const loader = new THREE.GLTFLoader();
 function spawnEnemy() {
-  loader.load('assets/strs/meteor/scene.gltf', function (gltf) {
+  loader.load('assets/strs/meteor/scene.gltf', (gltf) => {
     const enemy = gltf.scene.clone();
-    enemy.scale.set(0.5, 0.5, 0.5);
-    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at random X
+    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
     scene.add(enemy);
     enemies.push(enemy);
   });
@@ -89,7 +87,7 @@ function checkCollisions() {
         bullets.splice(bIndex, 1);
         enemies.splice(eIndex, 1);
         updateScore();
-        collisionSound.play();  // Play collision sound
+        collisionSound.play();
       }
     });
   });
@@ -117,7 +115,7 @@ function updateScore() {
 // Level Up
 function levelUp() {
   level++;
-  spawnInterval -= 100;  // Increase difficulty by reducing enemy spawn interval
+  spawnInterval -= 100;
 }
 
 // Main game loop
