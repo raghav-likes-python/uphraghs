@@ -60,7 +60,7 @@ function shootBullet() {
 const enemies = [];
 const loader = new THREE.GLTFLoader();
 function spawnEnemy() {
-  loader.load('uphraghs/assets/strs/meteor/scene.gltf', (gltf) => {
+    loader.load('../assets/strs/meteor/scene.gltf', (gltf) => {
     const enemy = gltf.scene;
     enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
     enemy.scale.set(0.5, 0.5, 0.5);
