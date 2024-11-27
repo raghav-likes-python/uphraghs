@@ -6,7 +6,7 @@ document.body.appendChild(renderer.domElement);
 
 let score = 0;
 let health = 100;
-let timeLeft = 10;
+let timeLeft = 60;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
@@ -19,7 +19,7 @@ const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
 
 var timer;
-// Hide tutorial and start game
+// Hide overlay and start game
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
@@ -27,7 +27,7 @@ function startGame() {
     if(timeLeft <= 0) {
       gameOver();
     }
-}, 1000);
+  }, 1000);
   animate();
 }
 
@@ -59,15 +59,18 @@ function shootBullet() {
   shootSound.play();  // Play shooting sound
 }
 
-// Enemies
+// Load asteroid model
+const loader = new THREE.GLTFLoader();
 const enemies = [];
+
 function spawnEnemy() {
-  const enemyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-  const enemyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-  const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
-  enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
-  scene.add(enemy);
-  enemies.push(enemy);
+  loader.load('assets/strs/meteor/scene.gltf', function (gltf) {
+    const enemy = gltf.scene.clone();
+    enemy.scale.set(0.5, 0.5, 0.5);
+    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at random X
+    scene.add(enemy);
+    enemies.push(enemy);
+  });
 }
 
 // Movement and Collision Detection
