@@ -6,7 +6,7 @@ document.body.appendChild(renderer.domElement);
 
 let score = 0;
 let health = 100;
-let timeLeft = 10;
+let timeLeft = 60;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
@@ -19,7 +19,6 @@ const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
 
 var timer;
-// Hide tutorial and start game
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
@@ -27,7 +26,7 @@ function startGame() {
     if(timeLeft <= 0) {
       gameOver();
     }
-}, 1000);
+  }, 1000);
   animate();
 }
 
@@ -56,18 +55,20 @@ function shootBullet() {
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-  shootSound.play();  // Play shooting sound
+  shootSound.play();
 }
 
-// Enemies
+// Enemy setup using GLTFLoader
 const enemies = [];
+const loader = new THREE.GLTFLoader();
 function spawnEnemy() {
-  const enemyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-  const enemyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-  const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
-  enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
-  scene.add(enemy);
-  enemies.push(enemy);
+  loader.load('assets/strs/meteor/scene.gltf', function(gltf) {
+    const enemy = gltf.scene;
+    enemy.scale.set(0.5, 0.5, 0.5); // Scale model to fit game
+    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
+    scene.add(enemy);
+    enemies.push(enemy);
+  });
 }
 
 // Movement and Collision Detection
@@ -82,11 +83,12 @@ function checkCollisions() {
   bullets.forEach((bullet, bIndex) => {
     enemies.forEach((enemy, eIndex) => {
       if (bullet.position.distanceTo(enemy.position) < 0.5) {
-        scene.remove(bullet, enemy);
+        scene.remove(bullet);
         bullets.splice(bIndex, 1);
+        scene.remove(enemy);
         enemies.splice(eIndex, 1);
         updateScore();
-        collisionSound.play();  // Play collision sound
+        collisionSound.play();
       }
     });
   });
@@ -128,7 +130,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-let spawnInterval = 1000;
+let spawnInterval = 2000;
 setInterval(spawnEnemy, spawnInterval);
 
 // Game over function
