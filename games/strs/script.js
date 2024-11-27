@@ -19,6 +19,7 @@ const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
 
 var timer;
+// Hide overlay and start game
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
@@ -55,17 +56,18 @@ function shootBullet() {
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-  shootSound.play();
+  shootSound.play();  // Play shooting sound
 }
 
-// Enemy setup using GLTFLoader
-const enemies = [];
+// Load asteroid model
 const loader = new THREE.GLTFLoader();
+const enemies = [];
+
 function spawnEnemy() {
-  loader.load('assets/strs/meteor/scene.gltf', function(gltf) {
-    const enemy = gltf.scene;
-    enemy.scale.set(0.5, 0.5, 0.5); // Scale model to fit game
-    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
+  loader.load('assets/strs/meteor/scene.gltf', function (gltf) {
+    const enemy = gltf.scene.clone();
+    enemy.scale.set(0.5, 0.5, 0.5);
+    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at random X
     scene.add(enemy);
     enemies.push(enemy);
   });
@@ -83,12 +85,11 @@ function checkCollisions() {
   bullets.forEach((bullet, bIndex) => {
     enemies.forEach((enemy, eIndex) => {
       if (bullet.position.distanceTo(enemy.position) < 0.5) {
-        scene.remove(bullet);
+        scene.remove(bullet, enemy);
         bullets.splice(bIndex, 1);
-        scene.remove(enemy);
         enemies.splice(eIndex, 1);
         updateScore();
-        collisionSound.play();
+        collisionSound.play();  // Play collision sound
       }
     });
   });
@@ -130,7 +131,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-let spawnInterval = 2000;
+let spawnInterval = 1000;
 setInterval(spawnEnemy, spawnInterval);
 
 // Game over function
