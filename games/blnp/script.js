@@ -9,7 +9,7 @@ document.body.appendChild(renderer.domElement);
 const balloons = [];
 let score = 0;
 
-let timeLeft = 60; 
+let timeLeft = 10; 
 const scoreElement = document.getElementById('score');
 const timeElement = document.getElementById('time');
 const totalPlayersElement = document.getElementById('total_players');
