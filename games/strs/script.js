@@ -7,7 +7,7 @@ document.body.appendChild(renderer.domElement);
 
 let score = 0;
 let health = 100;
-let timeLeft = 10;
+let timeLeft = 60;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
