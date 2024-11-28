@@ -1,4 +1,3 @@
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
@@ -7,7 +6,7 @@ document.body.appendChild(renderer.domElement);
 
 let score = 0;
 let health = 100;
-let timeLeft = 60;
+let timeLeft = 10;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
@@ -19,13 +18,16 @@ document.getElementById('startButton').onclick = startGame;
 const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
 
-let timer;
+var timer;
+// Hide tutorial and start game
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
-  timer = setInterval(() => {
-    timerDisplay.textContent = `Time left: ${--timeLeft}s`;
-    if (timeLeft <= 0) gameOver();
-  }, 1000);
+  timer = setInterval(function() {
+    timerDisplay.textContent = Time left: ${--timeLeft}s;
+    if(timeLeft <= 0) {
+      gameOver();
+    }
+}, 1000);
   animate();
 }
 
@@ -54,20 +56,18 @@ function shootBullet() {
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-  shootSound.play();
+  shootSound.play();  // Play shooting sound
 }
 
-// Enemies (Asteroids)
+// Enemies
 const enemies = [];
-const loader = new THREE.GLTFLoader();
 function spawnEnemy() {
-    loader.load('../../assets/strs/meteor/scene.gltf', (gltf) => {
-    const enemy = gltf.scene;
-    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
-    enemy.scale.set(0.5, 0.5, 0.5);
-    scene.add(enemy);
-    enemies.push(enemy);
-  });
+  const enemyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+  const enemyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+  enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
+  scene.add(enemy);
+  enemies.push(enemy);
 }
 
 // Movement and Collision Detection
@@ -81,12 +81,12 @@ function handleMovement() {
 function checkCollisions() {
   bullets.forEach((bullet, bIndex) => {
     enemies.forEach((enemy, eIndex) => {
-      if (bullet.position.distanceTo(enemy.position) < 1) {
+      if (bullet.position.distanceTo(enemy.position) < 0.5) {
         scene.remove(bullet, enemy);
         bullets.splice(bIndex, 1);
         enemies.splice(eIndex, 1);
         updateScore();
-        collisionSound.play();
+        collisionSound.play();  // Play collision sound
       }
     });
   });
@@ -95,9 +95,9 @@ function checkCollisions() {
 // Health Management
 function checkPlayerCollision() {
   enemies.forEach((enemy, eIndex) => {
-    if (ship.position.distanceTo(enemy.position) < 1) {
+    if (ship.position.distanceTo(enemy.position) < 0.5) {
       health -= 10;
-      healthDisplay.textContent = `Health: ${health}`;
+      healthDisplay.textContent = Health: ${health};
       scene.remove(enemy);
       enemies.splice(eIndex, 1);
       if (health <= 0) gameOver();
@@ -107,7 +107,7 @@ function checkPlayerCollision() {
 
 function updateScore() {
   score += 10;
-  scoreDisplay.textContent = `Score: ${score}`;
+  scoreDisplay.textContent = Score: ${score};
   if (score % 100 === 0) levelUp();
 }
 
