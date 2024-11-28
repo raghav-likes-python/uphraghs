@@ -113,18 +113,28 @@ function onMouseDown(event) {
     }
 }
 
+// function $alert(_title,_text,_button) {
+//     title.innerHTML = _title ? _title : "Alert!";
+//     text.innerHTML = _text;
+//     button.innerHTML = _button ? _button : "Okay!";
+
+//     wrap.style.display = "block";
+// }
+
 function updateTimer() {
     if (timeLeft > 0) {
         timeLeft--;
         timeElement.textContent = timeLeft;
     } else {
-        clearInterval(timerInterval);
         endGame();
     }
 }
 
 function endGame() {
-    alert(`Game Over! Your score: ${score}`);
+    cancelAnimationFrame(animate);
+    clearInterval(timerInterval);
+    clearInterval(createInterval);
+    alert("Game over!");
 
     // fetch('/submit_score', {
     //     method: 'POST',
@@ -142,19 +152,17 @@ function endGame() {
 
     localStorage.blnp_cnt++; // my new backend very cool
 
-    const curLbN = localStorage.blnp_lb_n.split(",");
-    const curLbS = localStorage.blnp_lb_s.split(",");
-    for(i=0;i<5;i++) {
-        if(curLbS[i] < score) {
-            curLbS[i] = score;
-            curLbN[i] = playerName;
-            i = 5;
+    let lbs = localStorage.blnp_lb_s.split(",");
+    let lbn = localStorage.blnp_lb_n.split(",");
+    localStorage.blnp_lb_s.sort().reverse();
+    for (let i = 0; i < 5; i++) {
+        if(Number(lb[i]) == score) {
+            lbn[i] = plrName;
         }
     }
-    localStorage.blnp_lb_n = curLbN;
-    localStorage.blnp_lb_s = curLbS;
     // if this failed i was ready to kill myself
-    location.reload();
+
+    location.href = "../..";
 }
 
 function fetchTopScores() {
@@ -189,16 +197,12 @@ window.onload = function() {
 
 
 function startGame() {
-    if (!playerName) {
-        alert('Please enter your name!');
-        return;
-    }
     gameStarted = true;
     tutorial.style.display = "none";
     playerInfo.style.display = "none";
     createBalloon();
-    animate();
-    setInterval(createBalloon, 1000); 
+    requestAnimationFrame(animate);
+    createInterval = setInterval(createBalloon, 1000); 
     timerInterval = setInterval(updateTimer, 1000);
 }
 

@@ -83,7 +83,7 @@ function gameOver() {
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
   alert("Game Over! Try again.");
-  location.reload();
+  location.href = "../..";
 }
 
 // Handle player movement and jumping

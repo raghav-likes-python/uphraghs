@@ -1,12 +1,13 @@
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
+const loader = new THREE.GLTFLoader();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 let score = 0;
 let health = 100;
-let timeLeft = 60;
+let timeLeft = 10;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
@@ -27,7 +28,7 @@ function startGame() {
     if(timeLeft <= 0) {
       gameOver();
     }
-  }, 1000);
+}, 1000);
   animate();
 }
 
@@ -61,14 +62,20 @@ function shootBullet() {
 
 // Enemies
 const enemies = [];
-const loader = new THREE.GLTFLoader();
 function spawnEnemy() {
-  loader.load('../../assets/strs/meteor/scene.gltf', (gltf) => {
-    const enemy = gltf.scene.clone();
-    enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
-    scene.add(enemy);
-    enemies.push(enemy);
-  });
+  const enemyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+  const enemyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
+  enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
+  scene.add(enemy);
+  enemies.push(enemy);
+
+  // loader.load('../../assets/strs/meteor/scene.gltf', function (gltf) {
+  //   const enemy = gltf.scene;
+  //   enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
+  //   scene.add(enemy);
+  //   enemies.push(enemy);
+  // });
 }
 
 // Movement and Collision Detection
@@ -87,7 +94,7 @@ function checkCollisions() {
         bullets.splice(bIndex, 1);
         enemies.splice(eIndex, 1);
         updateScore();
-        collisionSound.play();
+        collisionSound.play();  // Play collision sound
       }
     });
   });
@@ -115,7 +122,7 @@ function updateScore() {
 // Level Up
 function levelUp() {
   level++;
-  spawnInterval -= 100;
+  spawnInterval -= 100;  // Increase difficulty by reducing enemy spawn interval
 }
 
 // Main game loop
@@ -137,5 +144,5 @@ function gameOver() {
   cancelAnimationFrame(animate);
   clearInterval(timer);
   alert("Game Over! Your Score: " + score);
-  location.reload();
+  location.href = "../..";
 }
