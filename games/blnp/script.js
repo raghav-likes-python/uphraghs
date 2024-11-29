@@ -9,7 +9,7 @@ document.body.appendChild(renderer.domElement);
 const balloons = [];
 let score = 0;
 
-let timeLeft = 10; 
+let timeLeft = 60; 
 const scoreElement = document.getElementById('score');
 const timeElement = document.getElementById('time');
 const totalPlayersElement = document.getElementById('total_players');
@@ -162,7 +162,8 @@ function endGame() {
     }
     // if this failed i was ready to kill myself
 
-    location.href = "../..";
+  window.open"(../index");
+    this.window.close()
 }
 
 function fetchTopScores() {

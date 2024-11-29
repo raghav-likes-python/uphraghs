@@ -7,7 +7,7 @@ document.body.appendChild(renderer.domElement);
 
 let score = 0;
 let health = 100;
-let timeLeft = 10;
+let timeLeft = 60;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
@@ -24,7 +24,7 @@ var timer;
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
-    timerDisplay.textContent = "Time left: ${--timeLeft}s";
+    timerDisplay.textContent = `Time left: ${--timeLeft}s`;
     if(timeLeft <= 0) {
       gameOver();
     }
@@ -105,7 +105,7 @@ function checkPlayerCollision() {
   enemies.forEach((enemy, eIndex) => {
     if (ship.position.distanceTo(enemy.position) < 0.5) {
       health -= 10;
-      healthDisplay.textContent = "Health: ${health}";
+      healthDisplay.textContent = `Health: ${health}`;
       scene.remove(enemy);
       enemies.splice(eIndex, 1);
       if (health <= 0) gameOver();
