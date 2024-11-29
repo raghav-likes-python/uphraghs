@@ -140,12 +140,14 @@ function endGame() {
     {
     wSound.play();
     alert("You Won Game over!");
+    wait(3000);
     location.href = "../..";
     }
     else
     {
     lSound.play();
     alert("You lost Game over!");
+    wait(3000);
     location.href = "../..";
     }
 // fetch('/submit_score', {
