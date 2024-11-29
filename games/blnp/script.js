@@ -175,7 +175,6 @@ function endGame() {
   window.open("../../index.html");
     this.window.close()
 }
-}
 
 function fetchTopScores() {
     // fetch('/get_top_scores')
