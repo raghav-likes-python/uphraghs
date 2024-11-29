@@ -147,7 +147,7 @@ function endGame() {
         }
         location.href = "../..";
     }, 2000);
-}
+    
 // fetch('/submit_score', {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
