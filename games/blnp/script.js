@@ -137,16 +137,25 @@ function endGame() {
     clearInterval(timerInterval);
     clearInterval(createInterval);
 
-    setTimeout(() => {
+    const soundToPlay = score >= 100 ? wSound : lSound; // Choose the appropriate sound
+
+    soundToPlay.play().then(() => {
         if (score >= 100) {
-            wSound.play();
-            alert("You Won Game over!");
+            alert("You Won! Game over!");
         } else {
-            lSound.play();
-            alert("You lost Game over!");
+            alert("You Lost! Game over!");
+        }
+        location.href = "../..";  // Redirect after alert
+    }).catch(error => {
+        console.error("Error playing sound:", error);
+        // Fallback to alert if sound can't be played
+        if (score >= 100) {
+            alert("You Won! Game over!");
+        } else {
+            alert("You Lost! Game over!");
         }
         location.href = "../..";
-    }, 2000);
+    });
     
 // fetch('/submit_score', {
     //     method: 'POST',
