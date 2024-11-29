@@ -140,11 +140,13 @@ function endGame() {
     {
     wSound.play();
     alert("You Won Game over!");
+    location.href = "../..";
     }
     else
     {
     lSound.play();
     alert("You lost Game over!");
+    location.href = "../..";
     }
 // fetch('/submit_score', {
     //     method: 'POST',
@@ -171,8 +173,6 @@ function endGame() {
         }
     }
     // if this failed i was ready to kill myself
-
-     location.href = "../..";
 }
 
 function fetchTopScores() {
