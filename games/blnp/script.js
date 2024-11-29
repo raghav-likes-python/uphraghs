@@ -162,7 +162,7 @@ function endGame() {
     }
     // if this failed i was ready to kill myself
 
-  window.open("../index");
+  window.open("../index.html");
     this.window.close()
 }
 
