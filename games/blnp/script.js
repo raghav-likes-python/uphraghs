@@ -172,8 +172,7 @@ function endGame() {
     }
     // if this failed i was ready to kill myself
 
-  window.open("../../index.html");
-    this.window.close()
+     location.href = "../..";
 }
 
 function fetchTopScores() {
