@@ -137,39 +137,28 @@ function endGame() {
     clearInterval(timerInterval);
     clearInterval(createInterval);
 
-    const soundToPlay = score >= 100 ? wSound : lSound; // Choose the appropriate sound
-
-    soundToPlay.play().then(() => {
-        if (score >= 100) {
-            alert("You Won! Game over!");
-        } else {
-            alert("You Lost! Game over!");
+    if (score >= 100) {
+        wSound.play();
+        alert("You Won Game over!");
+    } 
+    else {
+        lSound.play();
+        alert("You lost Game over!");
         }
-        location.href = "../..";  // Redirect after alert
-    }).catch(error => {
-        console.error("Error playing sound:", error);
-        // Fallback to alert if sound can't be played
-        if (score >= 100) {
-            alert("You Won! Game over!");
-        } else {
-            alert("You Lost! Game over!");
-        }
-        location.href = "../..";
-    });
     
-// fetch('/submit_score', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ name: playerName, score: score })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log(data);
-    //     fetchTopScores(); 
-    // });
-    //_[5] = score;
-    // _ = _.sort.splice(1).reverse().toString(); // man am i so smart
-    // localStorage.blnp_lb-s != _
+ fetch('/submit_score', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ name: playerName, score: score })
+     })
+     .then(response => response.json())
+     .then(data => {
+         console.log(data);
+         fetchTopScores(); 
+     });
+    _[5] = score;
+    _ = _.sort.splice(1).reverse().toString(); // man am i so smart
+    localStorage.blnp_lb-s != _
 
     localStorage.blnp_cnt++; // my new backend very cool
 
