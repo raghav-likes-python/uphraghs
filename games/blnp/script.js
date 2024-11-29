@@ -202,8 +202,8 @@ function fetchTopScores() {
 }
 
 window.onload = function() {
-    fetchTotalPlayers();
-    fetchTopScores();
+    // fetchTotalPlayers();
+    // fetchTopScores();
 };
 
 
