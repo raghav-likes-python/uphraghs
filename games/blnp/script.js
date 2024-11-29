@@ -140,41 +140,13 @@ function endGame() {
     {
     wSound.play();
     alert("You Won Game over!");
-            // fetch('/submit_score', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ name: playerName, score: score })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log(data);
-    //     fetchTopScores(); 
-    // });
-    //_[5] = score;
-    // _ = _.sort.splice(1).reverse().toString(); // man am i so smart
-    // localStorage.blnp_lb-s != _
-
-    localStorage.blnp_cnt++; // my new backend very cool
-
-    let lbs = localStorage.blnp_lb_s.split(",");
-    let lbn = localStorage.blnp_lb_n.split(",");
-    localStorage.blnp_lb_s.sort().reverse();
-    for (let i = 0; i < 5; i++) {
-        if(Number(lb[i]) == score) {
-            lbn[i] = plrName;
-        }
-    }
-    // if this failed i was ready to kill myself
-
-  window.open("../index.html");
-    this.window.close()
-}
     }
     else
     {
     lSound.play();
     alert("You lost Game over!");
-            // fetch('/submit_score', {
+    }
+// fetch('/submit_score', {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
     //     body: JSON.stringify({ name: playerName, score: score })
@@ -203,7 +175,7 @@ function endGame() {
   window.open("../index.html");
     this.window.close()
 }
-    }
+}
 
 function fetchTopScores() {
     // fetch('/get_top_scores')
