@@ -173,6 +173,8 @@ function endGame() {
         }
     }
     // if this failed i was ready to kill myself
+
+    location.href = "../..";
 }
 
 function fetchTopScores() {
