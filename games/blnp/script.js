@@ -15,6 +15,8 @@ const timeElement = document.getElementById('time');
 const totalPlayersElement = document.getElementById('total_players');
 
 const popSound = document.getElementById('popSound');
+const wSound = document.getElementById('wSound');
+const lSound = document.getElementById('lSound');
 
 const tutorial = document.getElementById('tutorial');
 const playerInfo = document.getElementById('player-info');
@@ -134,8 +136,17 @@ function endGame() {
     cancelAnimationFrame(animate);
     clearInterval(timerInterval);
     clearInterval(createInterval);
-    alert("Game over!");
-
+    if (score>=100)
+    {
+    wSound.play();
+    alert("You Won Game over!");
+    }
+    else
+    {
+    lSound.play();
+    alert("You lost Game over!");
+    }
+    
     // fetch('/submit_score', {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
