@@ -15,6 +15,8 @@
         <li>Nobody: 0</li>
     </ol>
     <script>
+        const doFirstInit = false;
+        if(doFirstInit && !(localStorage.getItem("blnp_lb_s") && localStorage.getItem("strs_lb_s") && localStorage.getItem("jump_lb_s"))) {}
         const head = document.getElementById("head");
         const list = document.getElementById("list");
         head.style.display = "none";
@@ -23,6 +25,7 @@
         let _lb_n = ['Nobody','Nobody','Nobody','Nobody','Nobody',];
         let _lb_s = [0,0,0,0,0];
         if(query.includes("showHeading")) head.style.display = "block";
+        if(query.includes("forceInit")) {}
         if(query[0].slice(0,4) == "fetch=") {}
         switch(query[0].slice(6)) {
             case "blnp":
