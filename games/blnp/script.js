@@ -174,35 +174,26 @@ function endGame() {
 }
 
 function fetchTopScores() {
-    // fetch('/get_top_scores')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Top 5 Scores:', data);
+    const head = document.getElementById("head");
+    const list = document.getElementById("list");
+    let _lb_n = ['Nobody', 'Nobody', 'Nobody', 'Nobody', 'Nobody'];
+    let _lb_s = [0, 0, 0, 0, 0];
 
-    //         let scoresList = document.getElementById('top-scores');
-    //         scoresList.innerHTML = ''; 
-    //         data.forEach((scoreData, index) => {
-    //             let scoreItem = document.createElement('li');
-    //             scoreItem.textContent = `${index + 1}. ${scoreData.name}: ${scoreData.score}`;
-    //             scoresList.appendChild(scoreItem);
-    //         });
-    //     });
-    const _ = localStorage.blnp_lb_n.split(",");
-    const __ = localStorage.blnp_lb_s.split(",");
-    leaderboard.innerHTML = `
-    <li>${_[0]}: ${__[0]}</li>
-    <li>${_[1]}: ${__[1]}</li>
-    <li>${_[2]}: ${__[2]}</li>
-    <li>${_[3]}: ${__[3]}</li>
-    <li>${_[4]}: ${__[4]}</li>
-    `; // could be optimized but im lazy
+    // Fetch leaderboard data from localStorage
+    if (localStorage.getItem("blnp_lb_s") && localStorage.getItem("blnp_lb_n")) {
+        _lb_s = localStorage.blnp_lb_s.split(",");
+        _lb_n = localStorage.blnp_lb_n.split(",");
+    }
+
+    // Update leaderboard display
+    list.innerHTML = `
+        <li>${_lb_n[0]}: ${Number(_lb_s[0])}</li>
+        <li>${_lb_n[1]}: ${Number(_lb_s[1])}</li>
+        <li>${_lb_n[2]}: ${Number(_lb_s[2])}</li>
+        <li>${_lb_n[3]}: ${Number(_lb_s[3])}</li>
+        <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>
+    `;
 }
-
-window.onload = function() {
-    // fetchTotalPlayers();
-    // fetchTopScores();
-};
-
 
 function startGame() {
     gameStarted = true;
