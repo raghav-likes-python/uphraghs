@@ -139,38 +139,36 @@ function endGame() {
 
     if (score >= 100) {
         wSound.play();
-        alert("You Won Game over!");
-    } 
-    else {
+        alert("You Won! Game over!");
+    } else {
         lSound.play();
-        alert("You lost Game over!");
-        }
-    
-// fetch('/submit_score', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ name: playerName, score: score })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log(data);
-    //     fetchTopScores(); 
-    // });
-    //_[5] = score;
-    // _ = _.sort.splice(1).reverse().toString(); // man am i so smart
-    // localStorage.blnp_lb-s != _
+        alert("You Lost! Game over!");
+    }
 
-    localStorage.blnp_cnt++; // my new backend very cool
+    // Initialize localStorage leaderboard arrays if not already initialized
+    if (!localStorage.getItem("blnp_lb_s") || !localStorage.getItem("blnp_lb_n")) {
+        localStorage.setItem("blnp_lb_s", "0,0,0,0,0");
+        localStorage.setItem("blnp_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
+    }
 
-    let lbs = localStorage.blnp_lb_s.split(",");
-    let lbn = localStorage.blnp_lb_n.split(",");
-    localStorage.blnp_lb_s.sort().reverse();
-    for (let i = 0; i < 5; i++) {
-        if(Number(lb[i]) == score) {
-            lbn[i] = plrName;
+    // Fetch existing leaderboard data
+    let scores = localStorage.getItem("blnp_lb_s").split(",").map(Number);
+    let names = localStorage.getItem("blnp_lb_n").split(",");
+
+    // Insert the new score in the correct position
+    for (let i = 0; i < scores.length; i++) {
+        if (score > scores[i]) {
+            scores.splice(i, 0, score);
+            names.splice(i, 0, playerName);
+            break;
         }
     }
-    // if this failed i was ready to kill myself
+
+    scores = scores.slice(0, 5);
+    names = names.slice(0, 5);
+
+    localStorage.setItem("blnp_lb_s", scores.join(","));
+    localStorage.setItem("blnp_lb_n", names.join(","));
 
     location.href = "../..";
 }
