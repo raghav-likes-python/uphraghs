@@ -96,9 +96,7 @@ function gameOver() {
         lSound.play();
         alert("You Lost! Game over!");
     }
-        wait3Seconds(() => {
         location.href = "../..";
-    });
 }
 
 // Handle player movement and jumping
