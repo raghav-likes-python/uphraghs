@@ -100,7 +100,7 @@ function onMouseDown(event) {
         const poppedBalloon = intersects[0].object;
         scene.remove(poppedBalloon);
         balloons.splice(balloons.indexOf(poppedBalloon), 1);
-
+        popSound.currentTime = 0;
         popSound.play();
 
         if (poppedBalloon.isBad) {
@@ -226,10 +226,6 @@ function animate() {
 
 startButton.addEventListener('click', () => {startGame();});
 
-// why is this even here (looks like ai generated residue)
-// startGameButton.addEventListener('click', () => {
-//     startGame();
-// });
 
 function fetchTotalPlayers() {
     // fetch('/get_total_players')
