@@ -11,8 +11,6 @@ let timeLeft = 60;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
-const wSound = document.getElementById('wSound');
-const lSound = document.getElementById('lSound');
 const healthDisplay = document.getElementById('health');
 const timerDisplay = document.getElementById('timer');
 document.getElementById('startButton').onclick = startGame;
@@ -20,6 +18,8 @@ document.getElementById('startButton').onclick = startGame;
 // Sounds
 const shootSound = document.getElementById('shootSound');
 const collisionSound = document.getElementById('collisionSound');
+const wSound = document.getElementById('wSound');
+const lSound = document.getElementById('lSound');
 
 var timer;
 // Hide tutorial and start game
