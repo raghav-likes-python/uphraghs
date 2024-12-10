@@ -42,27 +42,43 @@ ship.rotation.x = Math.PI / 2;
 scene.add(ship);
 camera.position.z = 5;
 
-// Movement
 const moveSpeed = 0.2;
 const keys = {};
 document.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
 document.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
 
-// Bullets
+
 const bullets = [];
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') shootBullet();
 });
 
 function shootBullet() {
-  const bullet = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+  // Create the bullet
+  const bullet = new THREE.Mesh(
+    new THREE.SphereGeometry(0.1, 8, 8),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-  shootSound.play();  // Play shooting sound
+
+
+  playShootSound();
 }
 
-// Enemies
+
+async function playShootSound() {
+  try {
+
+    const soundClone = shootSound.cloneNode();
+    await soundClone.play();
+  } catch (err) {
+    console.error('Error playing sound:', err);
+  }
+}
+
+
 const enemies = [];
 function spawnEnemy() {
   const enemyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
