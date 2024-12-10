@@ -54,28 +54,11 @@ document.addEventListener('keydown', (e) => {
 });
 
 function shootBullet() {
-  // Create the bullet
-  const bullet = new THREE.Mesh(
-    new THREE.SphereGeometry(0.1, 8, 8),
-    new THREE.MeshBasicMaterial({ color: 0xffffff })
-  );
+  const bullet = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-
-
-  playShootSound();
-}
-
-
-async function playShootSound() {
-  try {
-
-    const soundClone = shootSound.cloneNode();
-    await soundClone.play();
-  } catch (err) {
-    console.error('Error playing sound:', err);
-  }
+  shootSound.play();
 }
 
 
