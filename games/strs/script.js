@@ -140,16 +140,29 @@ function animate() {
 let spawnInterval = 1000;
 setInterval(spawnEnemy, spawnInterval);
 
+function wait3Seconds(callback) {
+    setTimeout(callback, 3000); // 3000ms = 3 seconds
+}
+
+function wait3Seconds(callback) {
+    setTimeout(callback, 3000); // 3000ms = 3 seconds
+}
+
 function gameOver() {
-  cancelAnimationFrame(animate);
-  clearInterval(timer);
-if (score >= 1000) {
+    cancelAnimationFrame(animate);
+    clearInterval(timer);
+
+    if (score >= 1000) {
         wSound.play();
         alert("You Won! Game over!");
     } else {
         lSound.play();
         alert("You Lost! Game over!");
     }
-      setTimeout(callback, 3000)
-      location.href = "../..";
+
+
+    wait3Seconds(() => {
+        location.href = "../..";
+    });
 }
+
