@@ -132,6 +132,10 @@ function updateTimer() {
     }
 }
 
+function wait3Seconds(callback) {
+    setTimeout(callback, 3000); // 3000ms = 3 seconds
+}
+
 function endGame() {
     cancelAnimationFrame(animate);
     clearInterval(timerInterval);
@@ -144,7 +148,7 @@ function endGame() {
         lSound.play();
         alert("You Lost! Game over!");
     }
-
+     wait3Seconds(() => {
     // Initialize localStorage leaderboard arrays if not already initialized
     if (!localStorage.getItem("blnp_lb_s") || !localStorage.getItem("blnp_lb_n")) {
         localStorage.setItem("blnp_lb_s", "0,0,0,0,0");
@@ -171,7 +175,7 @@ function endGame() {
     localStorage.setItem("blnp_lb_n", names.join(","));
 
     location.href = "../..";
-}
+}}
 
 function fetchTopScores() {
     const head = document.getElementById("head");
