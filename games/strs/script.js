@@ -61,7 +61,7 @@ function shootBullet() {
   bullet.position.set(ship.position.x, ship.position.y, ship.position.z - 1);
   scene.add(bullet);
   bullets.push(bullet);
-  shootSound.currentTime = 0; // Reset the sound to the beginning
+  shootSound.currentTime = 0;
   shootSound.play();
 }
 
