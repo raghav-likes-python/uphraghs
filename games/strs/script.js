@@ -11,6 +11,8 @@ let timeLeft = 60;
 let level = 1;
 
 const scoreDisplay = document.getElementById('score');
+const wSound = document.getElementById('wSound');
+const lSound = document.getElementById('lSound');
 const healthDisplay = document.getElementById('health');
 const timerDisplay = document.getElementById('timer');
 document.getElementById('startButton').onclick = startGame;
@@ -143,6 +145,11 @@ setInterval(spawnEnemy, spawnInterval);
 function gameOver() {
   cancelAnimationFrame(animate);
   clearInterval(timer);
-  alert("Game Over! Your Score: " + score);
-  location.href = "../..";
+if (score >= 1000) {
+        wSound.play();
+        alert("You Won! Game over!");
+    } else {
+        lSound.play();
+        alert("You Lost! Game over!");
+    }
 }
