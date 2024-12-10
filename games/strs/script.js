@@ -151,4 +151,5 @@ if (score >= 1000) {
         lSound.play();
         alert("You Lost! Game over!");
     }
+      location.href = "../..";
 }
