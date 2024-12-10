@@ -140,7 +140,6 @@ function animate() {
 let spawnInterval = 1000;
 setInterval(spawnEnemy, spawnInterval);
 
-// Game over function
 function gameOver() {
   cancelAnimationFrame(animate);
   clearInterval(timer);
@@ -151,5 +150,6 @@ if (score >= 1000) {
         lSound.play();
         alert("You Lost! Game over!");
     }
+      setTimeout(callback, 3000)
       location.href = "../..";
 }
