@@ -5,6 +5,10 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// sounds
+const wSound = document.getElementById('wSound');
+const lSound = document.getElementById('lSound');
+
 // Camera position for third-person view
 camera.position.set(0, 5, 10);
 
@@ -77,13 +81,23 @@ function startTimer() {
   }, 1000);
 }
 
-// Game over logic
+function wait3Seconds(callback) {
+    setTimeout(callback, 3000); // 3000ms = 3 seconds
+}
+
 function gameOver() {
-  resetPlayer();
-  cancelAnimationFrame(animate);
-  clearInterval(timerInterval);
-  alert("Game Over! Try again.");
-  location.href = "../..";
+    cancelAnimationFrame(animate);
+    clearInterval(timer);
+      if (player.position.x==190 && player.position.y>0 && player.position.z==-190) {
+        wSound.play();
+        alert("You Won! Game over!");
+    } else {
+        lSound.play();
+        alert("You Lost! Game over!");
+    }
+        wait3Seconds(() => {
+        location.href = "../..";
+    });
 }
 
 // Handle player movement and jumping
