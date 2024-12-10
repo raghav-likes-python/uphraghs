@@ -86,6 +86,7 @@ function wait3Seconds(callback) {
 }
 
 function gameOver() {
+    resetPlayer();
     cancelAnimationFrame(animate);
     clearInterval(timer);
       if (player.position.x==190 && player.position.y>0 && player.position.z==-190) {
