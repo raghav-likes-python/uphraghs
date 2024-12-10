@@ -175,7 +175,7 @@ function endGame() {
     localStorage.setItem("blnp_lb_n", names.join(","));
 
     location.href = "../..";
-}}
+})}
 
 function fetchTopScores() {
     const head = document.getElementById("head");
