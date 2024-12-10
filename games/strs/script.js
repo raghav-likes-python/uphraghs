@@ -99,7 +99,8 @@ function checkCollisions() {
         bullets.splice(bIndex, 1);
         enemies.splice(eIndex, 1);
         updateScore();
-        collisionSound.play();  // Play collision sound
+        collisionSound.currentTime = 0;
+        collisionSound.play(); 
       }
     });
   });
