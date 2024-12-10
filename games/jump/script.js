@@ -81,22 +81,13 @@ function startTimer() {
   }, 1000);
 }
 
-function wait3Seconds(callback) {
-    setTimeout(callback, 3000); // 3000ms = 3 seconds
-}
-
+// Game over logic
 function gameOver() {
-    resetPlayer();
-    cancelAnimationFrame(animate);
-    clearInterval(timer);
-      if (player.position.x==190 && player.position.y>0 && player.position.z==-190) {
-        wSound.play();
-        alert("You Won! Game over!");
-    } else {
-        lSound.play();
-        alert("You Lost! Game over!");
-    }
-        location.href = "../..";
+  resetPlayer();
+  cancelAnimationFrame(animate);
+  clearInterval(timerInterval);
+  alert("Game Over! Try again.");
+  location.href = "../..";
 }
 
 // Handle player movement and jumping
