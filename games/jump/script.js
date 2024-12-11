@@ -47,8 +47,12 @@ function updateTimer() {
 // Platforms
 const platforms = [];
 function createPlatform(x, y, z) {
+  let letters = "0123456789ABCDEF"; 
+  let color = '#'; 
+  for (let i = 0; i < 6; i++) 
+    color += letters[(Math.floor(Math.random() * 16))]; 
   const platformGeometry = new THREE.BoxGeometry(5, 0.5, 5);
-  const platformMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+  const platformMaterial = new THREE.MeshBasicMaterial({ color });
   const platform = new THREE.Mesh(platformGeometry, platformMaterial);
   platform.position.set(x, y, z);
   scene.add(platform);
