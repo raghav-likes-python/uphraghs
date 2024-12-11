@@ -77,14 +77,6 @@ function startTimer() {
   timerInterval = setInterval(function () {
     timeLeft--;
     updateTimer();
-    const lastPlatform = platforms[platforms.length - 1];
-    const distance = lastPlatform.position.distanceTo(player.position);
-  
-    if (distance < 1) { 
-      resetPlayer();
-      clearInterval(timerInterval);
-      wingameOver();
-    }
     if (timeLeft <= 0 || lives <= 0) {
       resetPlayer();
       clearInterval(timerInterval);
