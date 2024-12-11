@@ -148,8 +148,8 @@ function wait3Seconds(callback) {
     setTimeout(callback, 3000); // 3000ms = 3 seconds
 }
 
-function wait3Seconds(callback) {
-    setTimeout(callback, 3000); // 3000ms = 3 seconds
+function wait2Seconds(callback) {
+    setTimeout(callback, 2000); // 3000ms = 3 seconds
 }
 
 function gameOver() {
@@ -165,7 +165,7 @@ function gameOver() {
     }
 
 
-    wait3Seconds(() => {
+    wait2Seconds(() => {
         location.href = "../..";
     });
 }
