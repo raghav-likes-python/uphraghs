@@ -188,6 +188,3 @@ function gameOver() {
 
     location.href = "../..";
 })}
-
-}
-
