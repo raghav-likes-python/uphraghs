@@ -94,7 +94,7 @@ function losegameOver() {
   resetPlayer();
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
-  lsound.play();
+  lSound.play();
   alert("Game Over! Try again.");
   wait2Seconds(() => {
         location.href = "../..";
