@@ -144,10 +144,6 @@ function animate() {
 let spawnInterval = 1000;
 setInterval(spawnEnemy, spawnInterval);
 
-function wait3Seconds(callback) {
-    setTimeout(callback, 3000); // 3000ms = 3 seconds
-}
-
 function wait2Seconds(callback) {
     setTimeout(callback, 2000); // 3000ms = 3 seconds
 }
@@ -164,9 +160,34 @@ function gameOver() {
         alert("You Lost! Game over!");
     }
 
-
+    
     wait2Seconds(() => {
-        location.href = "../..";
-    });
+      if (!localStorage.getItem("strs_lb_s") || !localStorage.getItem("blnp_lb_n")) {
+        localStorage.setItem("strs_lb_s", "0,0,0,0,0");
+        localStorage.setItem("strs_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
+    }
+
+    // Fetch existing leaderboard data
+    let scores = localStorage.getItem("strs_lb_s").split(",").map(Number);
+    let names = localStorage.getItem("strs_lb_n").split(",");
+
+    // Insert the new score in the correct position
+    for (let i = 0; i < scores.length; i++) {
+        if (score > scores[i]) {
+            scores.splice(i, 0, score);
+            names.splice(i, 0, playerName);
+            break;
+        }
+    }
+
+    scores = scores.slice(0, 5);
+    names = names.slice(0, 5);
+
+    localStorage.setItem("strs_lb_s", scores.join(","));
+    localStorage.setItem("strs_lb_n", names.join(","));
+
+    location.href = "../..";
+})}
+
 }
 
