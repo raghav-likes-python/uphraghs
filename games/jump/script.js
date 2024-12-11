@@ -80,18 +80,25 @@ function startTimer() {
     if (timeLeft <= 0 || lives <= 0) {
       resetPlayer();
       clearInterval(timerInterval);
-      gameOver();
+      losegameOver();
     }
   }, 1000);
 }
 
+function wait2Seconds(callback) {
+    setTimeout(callback, 2000); // 3000ms = 3 seconds
+}
+
 // Game over logic
-function gameOver() {
+function losegameOver() {
   resetPlayer();
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
+  lsound.play();
   alert("Game Over! Try again.");
-  location.href = "../..";
+  wait2Seconds(() => {
+        location.href = "../..";
+    });
 }
 
 // Handle player movement and jumping
@@ -143,7 +150,7 @@ function handleMovement() {
       if (lives > 0) {
         resetPlayer();
       } else {
-        gameOver();
+        losegameOver();
       }
     }
   }
