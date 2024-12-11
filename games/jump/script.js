@@ -77,10 +77,14 @@ function startTimer() {
   timerInterval = setInterval(function () {
     timeLeft--;
     updateTimer();
-    if (player.position.x>=187.5 && player.position.x<=192.5 && player.position.y==1 && player.position.z>=-192.5 && player.position.z<=-187.5){
+    const lastPlatform = platforms[platforms.length - 1];
+    const distance = lastPlatform.position.distanceTo(player.position);
+  
+    if (distance < 1) { 
       resetPlayer();
       clearInterval(timerInterval);
       wingameOver();
+    }
     }
     if (timeLeft <= 0 || lives <= 0) {
       resetPlayer();
