@@ -95,6 +95,15 @@ function losegameOver() {
   location.href = "../..";
 }
 
+function wingameOver() {
+  resetPlayer();
+  cancelAnimationFrame(animate);
+  clearInterval(timerInterval);
+  wSound.play();
+  alert("Game Over! Try again.");
+  location.href = "../..";
+}
+
 // Handle player movement and jumping
 const keys = {};
 document.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
