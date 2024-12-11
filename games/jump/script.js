@@ -85,7 +85,6 @@ function startTimer() {
       clearInterval(timerInterval);
       wingameOver();
     }
-    }
     if (timeLeft <= 0 || lives <= 0) {
       resetPlayer();
       clearInterval(timerInterval);
