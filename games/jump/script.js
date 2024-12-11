@@ -85,10 +85,6 @@ function startTimer() {
   }, 1000);
 }
 
-function wait2Seconds(callback) {
-    setTimeout(callback, 2000); // 3000ms = 3 seconds
-}
-
 // Game over logic
 function losegameOver() {
   resetPlayer();
@@ -96,9 +92,7 @@ function losegameOver() {
   clearInterval(timerInterval);
   lSound.play();
   alert("Game Over! Try again.");
-  wait2Seconds(() => {
-        location.href = "../..";
-    });
+  location.href = "../..";
 }
 
 // Handle player movement and jumping
