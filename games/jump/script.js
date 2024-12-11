@@ -77,7 +77,7 @@ function startTimer() {
   timerInterval = setInterval(function () {
     timeLeft--;
     updateTimer();
-    if (player.position.x>187.5 && player.position.x<192.5 && player.position.y=1 && player.position.z>-192.5 && player.position.z<-187.5){
+    if (player.position.x>=187.5 && player.position.x<=192.5 && player.position.y==1 && player.position.z>=-192.5 && player.position.z<=-187.5){
       resetPlayer();
       clearInterval(timerInterval);
       wingameOver();
