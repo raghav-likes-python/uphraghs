@@ -77,6 +77,11 @@ function startTimer() {
   timerInterval = setInterval(function () {
     timeLeft--;
     updateTimer();
+    if (player.position.x>187.5 && player.position.x<192.5 && player.position.y=1 && player.position.z>-192.5 && player.position.z<-187.5){
+      resetPlayer();
+      clearInterval(timerInterval);
+      wingameOver();
+    }
     if (timeLeft <= 0 || lives <= 0) {
       resetPlayer();
       clearInterval(timerInterval);
@@ -91,7 +96,7 @@ function losegameOver() {
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
   lSound.play();
-  alert("Game Over! Try again.");
+  alert("Game Over! You Lost!");
   location.href = "../..";
 }
 
@@ -100,7 +105,7 @@ function wingameOver() {
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
   wSound.play();
-  alert("Game Over! Try again.");
+  alert("Game Over! You Won!");
   location.href = "../..";
 }
 
