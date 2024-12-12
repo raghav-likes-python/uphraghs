@@ -79,7 +79,7 @@ function spawnNextPlatform() {
   // Random distances ensuring challenging yet jumpable platforms
   const xOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
   const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
-  const zOffset = Math.random() * 0.6 * (maxDistance - minDistance) + minDistance; // Min to Max range
+  const zOffset = Math.random() * (maxDistance + minDistance*0.1*-0.8*Math.random-minDistance) + minDistance; // Min to Max range
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
