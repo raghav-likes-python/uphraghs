@@ -173,7 +173,7 @@ function handleMovement() {
         }
 
         // Check if the player is on the last platform
-        if (platformCount === 2 && index === platforms.length - 19) {
+        if (platformCount === 20 && index === platforms.length - 1) {
           winGameOver();
         }
       }
