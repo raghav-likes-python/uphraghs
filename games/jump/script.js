@@ -179,3 +179,34 @@ function handleMovement() {
       }
     }
   });
+// If the player is not on any platform and falls
+  if (!onPlatform) {
+    isOnGround = false;
+    if (player.position.y < -5) {
+      lives--;
+      updateLives();
+      if (lives > 0) {
+        resetPlayer();
+      } else {
+        loseGameOver();
+      }
+    }
+  }
+}
+
+// Respawn player on the first platform
+function resetPlayer() {
+  player.position.set(0, 3, 0);
+  velocity = 0;
+}
+
+// Main game loop
+function animate() {
+  requestAnimationFrame(animate);
+  handleMovement();
+  renderer.render(scene, camera);
+
+  // Update camera to follow the player
+  camera.position.set(player.position.x, player.position.y + 4, player.position.z + 8);
+  camera.lookAt(player.position);
+}
