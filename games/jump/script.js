@@ -33,7 +33,7 @@ let timeLeft = 60;
 // Update lives display
 const livesDisplay = document.getElementById('livesDisplay');
 function updateLives() {
-  livesDisplay.textContent = Lives: ${lives};
+  livesDisplay.textContent = `Lives: ${lives}`;
 }
 
 // Timer display
