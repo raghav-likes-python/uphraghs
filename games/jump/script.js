@@ -79,13 +79,13 @@ function spawnNextPlatform() {
   // Random distances ensuring challenging yet jumpable platforms
   const xOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
   const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
-  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
+  const zDeviation = (Math.random() - 0.5) * maxDistance * 2; // Allows placement left or right
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
 
   const nextX = lastPlatform.position.x + xOffset;
-  const nextZ = lastPlatform.position.z - zOffset;
+  const nextZ = lastPlatform.position.z + zDeviation; // Allow left/right movement
 
   createPlatform(nextX, nextY, nextZ);
   platformCount++;
