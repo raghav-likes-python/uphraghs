@@ -47,10 +47,8 @@ function updateTimer() {
 // Platforms
 const platforms = [];
 const platformSize = { width: 5, height: 0.5, depth: 5 };
-const minXDistance = 8; // Minimum distance between platforms
-const maxXDistance = 10; // Maximum distance between platforms
-const minZDistance = 6; // Minimum distance between platforms
-const maxZDistance = 10; // Maximum distance between platforms
+const minDistance = 4; 
+const maxDistance = 8; 
 const maxYDifference = 2.5; // Maximum y-difference
 const minYPosition = 1; // Minimum y-position to avoid falling
 let platformCount = 0; // To keep track of platform count
@@ -79,9 +77,9 @@ function spawnNextPlatform() {
   const lastPlatform = platforms[platforms.length - 1];
 
   // Random distances ensuring challenging yet jumpable platforms
-  const xOffset = Math.random() * (maxXDistance - minXDistance) + minXDistance; // Min to Max range
+  const xOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
   const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
-  const zOffset = Math.random() * (maxZDistance - minZDistance) + minZDistance; // Min to Max range
+  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
