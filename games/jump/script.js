@@ -47,6 +47,7 @@ function updateTimer() {
 // Platforms
 const platforms = [];
 const platformSize = { width: 5, height: 0.5, depth: 5 };
+let platformIndex = 0; // Track the current platform
 
 function createPlatform(x, y, z) {
   let letters = "0123456789ABCDEF"; 
@@ -64,18 +65,20 @@ function createPlatform(x, y, z) {
 // Initial platform
 createPlatform(0, 1, 0);
 
-// Generate next platform dynamically
+// Generate next platform dynamically with sinusoidal y-movement
 function spawnNextPlatform() {
   const lastPlatform = platforms[platforms.length - 1];
+  
   const xOffset = Math.random() * 6 - 3; // Random x offset (-3 to 3)
-  const yOffset = Math.random() * 3 + 1; // Random y offset (1 to 4)
   const zOffset = Math.random() * 6 + 4; // Random z offset (4 to 10)
-
+  
+  // Use a sine wave for y position
+  const nextY = 1 + Math.sin(platformIndex * Math.PI / 6) * 3; // Wave-like y variation
   const nextX = lastPlatform.position.x + xOffset;
-  const nextY = lastPlatform.position.y + yOffset;
   const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
+  platformIndex++; // Increment index for wave function
 }
 
 // Start button functionality
