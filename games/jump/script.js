@@ -47,8 +47,8 @@ function updateTimer() {
 // Platforms
 const platforms = [];
 const platformSize = { width: 5, height: 0.5, depth: 5 };
-const minDistance = 4; 
-const maxDistance = 8; 
+const minDistance = 8; 
+const maxDistance = 10; 
 const maxYDifference = 2.5; // Maximum y-difference
 const minYPosition = 1; // Minimum y-position to avoid falling
 let platformCount = 0; // To keep track of platform count
