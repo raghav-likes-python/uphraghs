@@ -5,7 +5,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// sounds
+// Sounds
 const wSound = document.getElementById('wSound');
 const lSound = document.getElementById('lSound');
 
@@ -17,7 +17,7 @@ const playerGeometry = new THREE.BoxGeometry(1, 2, 1);
 const playerMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const player = new THREE.Mesh(playerGeometry, playerMaterial);
 scene.add(player);
-player.position.y+= 10;
+player.position.set(0, 3, 0);
 
 // Movement variables
 const moveSpeed = 0.1;
@@ -50,7 +50,7 @@ function createPlatform(x, y, z) {
   let letters = "0123456789ABCDEF"; 
   let color = '#'; 
   for (let i = 0; i < 6; i++) 
-    color += letters[(Math.floor(Math.random() * 16))]; 
+    color += letters[Math.floor(Math.random() * 16)];
   const platformGeometry = new THREE.BoxGeometry(5, 0.5, 5);
   const platformMaterial = new THREE.MeshBasicMaterial({ color });
   const platform = new THREE.Mesh(platformGeometry, platformMaterial);
@@ -72,21 +72,20 @@ document.getElementById('startButton').addEventListener('click', () => {
 });
 
 // Timer function
-var timerInterval;
+let timerInterval;
 function startTimer() {
-  timerInterval = setInterval(function () {
+  timerInterval = setInterval(() => {
     timeLeft--;
     updateTimer();
     if (timeLeft <= 0 || lives <= 0) {
-      resetPlayer();
       clearInterval(timerInterval);
-      losegameOver();
+      loseGameOver();
     }
   }, 1000);
 }
 
 // Game over logic
-function losegameOver() {
+function loseGameOver() {
   resetPlayer();
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
@@ -95,7 +94,7 @@ function losegameOver() {
   location.href = "../..";
 }
 
-function wingameOver() {
+function winGameOver() {
   resetPlayer();
   cancelAnimationFrame(animate);
   clearInterval(timerInterval);
@@ -126,7 +125,7 @@ function handleMovement() {
 
   // Check if the player is on a platform
   let onPlatform = false;
-  platforms.forEach(platform => {
+  platforms.forEach((platform, index) => {
     if (
       player.position.y <= platform.position.y + 1 &&
       player.position.y >= platform.position.y &&
@@ -140,6 +139,11 @@ function handleMovement() {
         velocity = 0;
         isOnGround = true;
         player.position.y = platform.position.y + 1;
+
+        // Check if the player is on the last platform
+        if (index === platforms.length - 1) {
+          winGameOver();
+        }
       }
     }
   });
@@ -153,7 +157,7 @@ function handleMovement() {
       if (lives > 0) {
         resetPlayer();
       } else {
-        losegameOver();
+        loseGameOver();
       }
     }
   }
@@ -175,4 +179,3 @@ function animate() {
   camera.position.set(player.position.x, player.position.y + 4, player.position.z + 8);
   camera.lookAt(player.position);
 }
-
