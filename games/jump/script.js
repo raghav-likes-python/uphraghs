@@ -47,6 +47,7 @@ function updateTimer() {
 // Platforms
 const platforms = [];
 const platformSize = { width: 5, height: 0.5, depth: 5 };
+let platformCount = 0; // To keep track of platform count
 
 function createPlatform(x, y, z) {
   let letters = "0123456789ABCDEF"; 
@@ -63,12 +64,15 @@ function createPlatform(x, y, z) {
 
 // Initial platform
 createPlatform(0, 1, 0);
+platformCount++;
 
 // Generate next platform dynamically
 function spawnNextPlatform() {
+  if (platformCount >= 20) return; // Stop spawning after the 20th platform
+
   const lastPlatform = platforms[platforms.length - 1];
   const xOffset = Math.random() * 6 - 3; // Random x offset (-3 to 3)
-  const yOffset = Math.random() * 3 + 1; // Random y offset (1 to 4)
+  const yOffset = Math.random() * 3 - 1.5; // Random y offset (-1.5 to 1.5 for up-down variation)
   const zOffset = Math.random() * 6 + 4; // Random z offset (4 to 10)
 
   const nextX = lastPlatform.position.x + xOffset;
@@ -76,6 +80,7 @@ function spawnNextPlatform() {
   const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
+  platformCount++;
 }
 
 // Start button functionality
@@ -154,9 +159,14 @@ function handleMovement() {
         isOnGround = true;
         player.position.y = platform.position.y + 1;
 
-        // Spawn the next platform when player lands on current platform
+        // Spawn the next platform when player lands on the current platform
         if (index === platforms.length - 1) {
           spawnNextPlatform();
+        }
+
+        // Check if the player is on the last platform
+        if (platformCount === 20 && index === platforms.length - 1) {
+          winGameOver();
         }
       }
     }
