@@ -48,10 +48,18 @@ function updateTimer() {
 const platforms = [];
 const platformSize = { width: 5, height: 0.5, depth: 5 };
 
+// Platform spawning limits
+const minXOffset = 2;
+const maxXOffset = 5;
+const minYOffset = -2;
+const maxYOffset = 2;
+const minZOffset = 4;
+const maxZOffset = 10;
+
 function createPlatform(x, y, z) {
-  let letters = "0123456789ABCDEF"; 
-  let color = '#'; 
-  for (let i = 0; i < 6; i++) 
+  let letters = "0123456789ABCDEF";
+  let color = '#';
+  for (let i = 0; i < 6; i++)
     color += letters[Math.floor(Math.random() * 16)];
   const platformGeometry = new THREE.BoxGeometry(platformSize.width, platformSize.height, platformSize.depth);
   const platformMaterial = new THREE.MeshBasicMaterial({ color });
@@ -67,12 +75,15 @@ createPlatform(0, 1, 0);
 // Generate next platform dynamically
 function spawnNextPlatform() {
   const lastPlatform = platforms[platforms.length - 1];
-  const xOffset = Math.random() * 6 - 3; // Random x offset (-3 to 3)
-  const yOffset = Math.random() * 3 + 1; // Random y offset (1 to 4)
-  const zOffset = Math.random() * 6 + 4; // Random z offset (4 to 10)
+  
+  // Calculate offsets within bounds
+  const xOffset = Math.random() * (maxXOffset - minXOffset) + minXOffset;
+  const yOffset = Math.random() * (maxYOffset - minYOffset) + minYOffset;
+  const zOffset = Math.random() * (maxZOffset - minZOffset) + minZOffset;
 
+  // Next platform position
   const nextX = lastPlatform.position.x + xOffset;
-  const nextY = lastPlatform.position.y + yOffset;
+  const nextY = Math.max(lastPlatform.position.y + yOffset, 1); // Ensure it doesn't go below y=1
   const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
