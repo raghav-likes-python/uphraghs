@@ -46,14 +46,12 @@ function updateTimer() {
 
 // Platforms
 const platforms = [];
-const platformSize = { width: 5, height: 0.5, depth: 5 };
-
 function createPlatform(x, y, z) {
   let letters = "0123456789ABCDEF"; 
   let color = '#'; 
   for (let i = 0; i < 6; i++) 
     color += letters[Math.floor(Math.random() * 16)];
-  const platformGeometry = new THREE.BoxGeometry(platformSize.width, platformSize.height, platformSize.depth);
+  const platformGeometry = new THREE.BoxGeometry(5, 0.5, 5);
   const platformMaterial = new THREE.MeshBasicMaterial({ color });
   const platform = new THREE.Mesh(platformGeometry, platformMaterial);
   platform.position.set(x, y, z);
@@ -61,21 +59,9 @@ function createPlatform(x, y, z) {
   platforms.push(platform);
 }
 
-// Initial platform
-createPlatform(0, 1, 0);
-
-// Generate next platform dynamically
-function spawnNextPlatform() {
-  const lastPlatform = platforms[platforms.length - 1];
-  const xOffset = Math.random() * 6 - 3; // Random x offset (-3 to 3)
-  const yOffset = Math.random() * 3 + 1; // Random y offset (1 to 4)
-  const zOffset = Math.random() * 6 + 4; // Random z offset (4 to 10)
-
-  const nextX = lastPlatform.position.x + xOffset;
-  const nextY = lastPlatform.position.y + yOffset;
-  const nextZ = lastPlatform.position.z - zOffset;
-
-  createPlatform(nextX, nextY, nextZ);
+// Generate 20 platforms
+for (let i = 0; i < 20; i++) {
+  createPlatform(i * 10, 1, -i * 10);
 }
 
 // Start button functionality
@@ -143,10 +129,10 @@ function handleMovement() {
     if (
       player.position.y <= platform.position.y + 1 &&
       player.position.y >= platform.position.y &&
-      player.position.x > platform.position.x - platformSize.width / 2 &&
-      player.position.x < platform.position.x + platformSize.width / 2 &&
-      player.position.z > platform.position.z - platformSize.depth / 2 &&
-      player.position.z < platform.position.z + platformSize.depth / 2
+      player.position.x > platform.position.x - 2.5 &&
+      player.position.x < platform.position.x + 2.5 &&
+      player.position.z > platform.position.z - 2.5 &&
+      player.position.z < platform.position.z + 2.5
     ) {
       onPlatform = true;
       if (velocity < 0) {
@@ -154,9 +140,9 @@ function handleMovement() {
         isOnGround = true;
         player.position.y = platform.position.y + 1;
 
-        // Spawn the next platform when player lands on current platform
+        // Check if the player is on the last platform
         if (index === platforms.length - 1) {
-          spawnNextPlatform();
+          winGameOver();
         }
       }
     }
