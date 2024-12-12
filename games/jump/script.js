@@ -76,16 +76,16 @@ function spawnNextPlatform() {
 
   const lastPlatform = platforms[platforms.length - 1];
 
-  // Random distances for challenging but jumpable platforms
-  const xDeviation = (Math.random() - 0.5) * maxDistance * 2; // Random offset left or right
-  const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
-  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Always in front
+  // Slightly increased randomness for a moderate challenge
+  const xDeviation = (Math.random() - 0.5) * (maxDistance * 1.5); // Moderate lateral variation
+  const yOffset = Math.random() * maxYDifference - maxYDifference * 0.6; // Moderate vertical variation
+  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Forward progress
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
 
-  // Platforms appear relative to the player's forward direction
-  const nextX = player.position.x + xDeviation;
+  // Platforms are spaced slightly farther apart
+  const nextX = lastPlatform.position.x + xDeviation;
   const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
