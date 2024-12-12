@@ -76,22 +76,21 @@ function spawnNextPlatform() {
 
   const lastPlatform = platforms[platforms.length - 1];
 
-  // Slightly increased randomness for a moderate challenge
-  const xDeviation = (Math.random() - 0.5) * (maxDistance * 1.5); // Moderate lateral variation
-  const yOffset = Math.random() * maxYDifference - maxYDifference * 0.6; // Moderate vertical variation
-  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Forward progress
+  // Random distances for challenging but jumpable platforms
+  const xDeviation = (Math.random() - 0.5) * maxDistance * 2; // Random offset left or right
+  const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
+  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Always in front
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
 
-  // Platforms are spaced slightly farther apart
-  const nextX = lastPlatform.position.x + xDeviation;
+  // Platforms appear relative to the player's forward direction
+  const nextX = player.position.x + xDeviation;
   const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
   platformCount++;
 }
-
 
 // Start button functionality
 document.getElementById('startButton').addEventListener('click', () => {
@@ -138,11 +137,20 @@ document.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
 document.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
 
 function handleMovement() {
-  if (keys['w'] || keys['arrowup']) player.position.z -= moveSpeed;
-  if (keys['s'] || keys['arrowdown']) player.position.z += moveSpeed;
-  if (keys['a'] || keys['arrowleft']) player.position.x -= moveSpeed;
-  if (keys['d'] || keys['arrowright']) player.position.x += moveSpeed;
+  let moveX = 0;
+  let moveZ = 0;
 
+  // Combine arrow key movements
+  if (keys['w'] || keys['arrowup']) moveZ -= moveSpeed; // Forward
+  if (keys['s'] || keys['arrowdown']) moveZ += moveSpeed; // Backward
+  if (keys['a'] || keys['arrowleft']) moveX -= moveSpeed; // Left
+  if (keys['d'] || keys['arrowright']) moveX += moveSpeed; // Right
+
+  // Allow diagonal movement
+  player.position.x += moveX;
+  player.position.z += moveZ;
+
+  // Jumping logic
   if ((keys[' '] || keys['space']) && isOnGround) {
     velocity = jumpHeight;
     isOnGround = false;
@@ -196,6 +204,7 @@ function handleMovement() {
     }
   }
 }
+
 
 // Respawn player on the first platform
 function resetPlayer() {
