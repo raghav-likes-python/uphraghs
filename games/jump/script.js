@@ -41,7 +41,7 @@ const timerDisplay = document.getElementById('timerDisplay');
 function updateTimer() {
   let minutes = Math.floor(timeLeft / 60);
   let seconds = timeLeft % 60;
-  timerDisplay.textContent = Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
+  timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 // Platforms
