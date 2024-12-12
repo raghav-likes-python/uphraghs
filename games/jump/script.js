@@ -47,8 +47,6 @@ function updateTimer() {
 // Platforms
 const platforms = [];
 const platformSize = { width: 5, height: 0.5, depth: 5 };
-const maxJumpDistance = 5; // Maximum distance the player can jump
-const minJumpDistance = 3; // Minimum distance for better gameplay
 
 function createPlatform(x, y, z) {
   let letters = "0123456789ABCDEF"; 
@@ -69,13 +67,13 @@ createPlatform(0, 1, 0);
 // Generate next platform dynamically
 function spawnNextPlatform() {
   const lastPlatform = platforms[platforms.length - 1];
+  const xOffset = Math.random() * 6 - 3; // Random x offset (-3 to 3)
+  const yOffset = Math.random() * 3 + 1; // Random y offset (1 to 4)
+  const zOffset = Math.random() * 6 + 4; // Random z offset (4 to 10)
 
-  // Ensure the new platform is in front
-  const nextZ = lastPlatform.position.z - (Math.random() * (maxJumpDistance - minJumpDistance) + minJumpDistance);
-
-  // Generate random X and Y positions within jumpable range
-  const nextX = lastPlatform.position.x + (Math.random() * (maxJumpDistance * 2) - maxJumpDistance);
-  const nextY = Math.random() * 2 + 1; // Slight variation in height (1 to 3)
+  const nextX = lastPlatform.position.x + xOffset;
+  const nextY = lastPlatform.position.y + yOffset;
+  const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
 }
