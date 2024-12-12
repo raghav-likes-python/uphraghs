@@ -33,7 +33,7 @@ let timeLeft = 60;
 // Update lives display
 const livesDisplay = document.getElementById('livesDisplay');
 function updateLives() {
-  livesDisplay.textContent = `Lives: ${lives}`;
+  livesDisplay.textContent = Lives: ${lives};
 }
 
 // Timer display
@@ -41,7 +41,7 @@ const timerDisplay = document.getElementById('timerDisplay');
 function updateTimer() {
   let minutes = Math.floor(timeLeft / 60);
   let seconds = timeLeft % 60;
-  timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  timerDisplay.textContent = Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
 }
 
 // Platforms
@@ -77,9 +77,9 @@ function spawnNextPlatform() {
   const lastPlatform = platforms[platforms.length - 1];
 
   // Random distances ensuring challenging yet jumpable platforms
-  const xOffset = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * (maxDistance - minDistance) + minDistance); // Left or right
+  const xOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
   const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
-  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Forward
+  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Min to Max range
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
@@ -90,7 +90,6 @@ function spawnNextPlatform() {
   createPlatform(nextX, nextY, nextZ);
   platformCount++;
 }
-
 
 // Start button functionality
 document.getElementById('startButton').addEventListener('click', () => {
@@ -137,20 +136,11 @@ document.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
 document.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
 
 function handleMovement() {
-  let moveX = 0;
-  let moveZ = 0;
+  if (keys['w'] || keys['arrowup']) player.position.z -= moveSpeed;
+  if (keys['s'] || keys['arrowdown']) player.position.z += moveSpeed;
+  if (keys['a'] || keys['arrowleft']) player.position.x -= moveSpeed;
+  if (keys['d'] || keys['arrowright']) player.position.x += moveSpeed;
 
-  // Combine arrow key movements
-  if (keys['w'] || keys['arrowup']) moveZ -= moveSpeed; // Forward
-  if (keys['s'] || keys['arrowdown']) moveZ += moveSpeed; // Backward
-  if (keys['a'] || keys['arrowleft']) moveX -= moveSpeed; // Left
-  if (keys['d'] || keys['arrowright']) moveX += moveSpeed; // Right
-
-  // Allow diagonal movement
-  player.position.x += moveX;
-  player.position.z += moveZ;
-
-  // Jumping logic
   if ((keys[' '] || keys['space']) && isOnGround) {
     velocity = jumpHeight;
     isOnGround = false;
@@ -204,7 +194,6 @@ function handleMovement() {
     }
   }
 }
-
 
 // Respawn player on the first platform
 function resetPlayer() {
