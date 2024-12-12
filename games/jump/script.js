@@ -76,21 +76,21 @@ function spawnNextPlatform() {
 
   const lastPlatform = platforms[platforms.length - 1];
 
-  // Random distances for challenging but jumpable platforms
-  const xDeviation = (Math.random() - 0.5) * maxDistance * 2; // Random offset left or right
+  // Random distances ensuring challenging yet jumpable platforms
+  const xOffset = (Math.random() < 0.5 ? -1 : 1) * (Math.random() * (maxDistance - minDistance) + minDistance); // Left or right
   const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
-  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Always in front
+  const zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Forward
 
   // Ensure y doesn't go too low
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
 
-  // Platforms appear relative to the player's forward direction
-  const nextX = player.position.x + xDeviation;
+  const nextX = lastPlatform.position.x + xOffset;
   const nextZ = lastPlatform.position.z - zOffset;
 
   createPlatform(nextX, nextY, nextZ);
   platformCount++;
 }
+
 
 // Start button functionality
 document.getElementById('startButton').addEventListener('click', () => {
