@@ -152,8 +152,8 @@ function gameOver() {
     cancelAnimationFrame(animate);
     clearInterval(timer);
 
-    const playerName = localStorage.plrName
-    updateLeaderboard(playerName, score); // Update leaderboard with the current score
+    const playerName = localStorage.plrName 
+    updateLeaderboard(playerName, score); // Update leaderboard
 
     if (score >= 1000) {
         wSound.play();
@@ -164,16 +164,16 @@ function gameOver() {
     }
 
     wait2Seconds(() => {
-        location.href = "../.."; // Redirect to the main menu
+        location.href = "../.."; // Redirect after game ends
     });
 }
 
-// Update leaderboard without modifying leaderboard code
+// Update leaderboard
 function updateLeaderboard(name, score) {
     let _lb_n = localStorage.strs_lb_n ? localStorage.strs_lb_n.split(",") : ['Nobody', 'Nobody', 'Nobody', 'Nobody', 'Nobody'];
     let _lb_s = localStorage.strs_lb_s ? localStorage.strs_lb_s.split(",").map(Number) : [0, 0, 0, 0, 0];
 
-    // Add the current player
+    // Add current player's name and score
     _lb_n.push(name);
     _lb_s.push(score);
 
@@ -182,11 +182,12 @@ function updateLeaderboard(name, score) {
     _lb_n = sortedIndices.map(i => _lb_n[i]);
     _lb_s = sortedIndices.map(i => _lb_s[i]);
 
-    // Keep only the top 5
+    // Keep top 5 scores
     _lb_n = _lb_n.slice(0, 5);
     _lb_s = _lb_s.slice(0, 5);
 
-    // Save updated leaderboard back to localStorage
+    // Save back to localStorage
     localStorage.strs_lb_n = _lb_n.join(",");
     localStorage.strs_lb_s = _lb_s.join(",");
 }
+
