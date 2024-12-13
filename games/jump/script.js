@@ -54,21 +54,32 @@ const minYPosition = 1; // Minimum y-position to avoid falling
 let platformCount = 0; // To keep track of platform count
 
 function createPlatform(x, y, z) {
-  let letters = "0123456789ABCDEF"; 
-  let color = '#'; 
-  for (let i = 0; i < 6; i++) 
+  // Random color for the platform
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  // Create the platform
   const platformGeometry = new THREE.BoxGeometry(platformSize.width, platformSize.height, platformSize.depth);
   const platformMaterial = new THREE.MeshBasicMaterial({ color });
   const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+
+  // Add an outline
+  const outlineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White outline
+  const outlineGeometry = new THREE.EdgesGeometry(platformGeometry);
+  const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
+
+  // Position the platform and its outline
   platform.position.set(x, y, z);
+  outline.position.set(x, y, z);
+
   scene.add(platform);
+  scene.add(outline);
+
   platforms.push(platform);
 }
-
-// Initial platform
-createPlatform(0, 1, 0);
-platformCount++;
 
 // Generate next platform dynamically
 function spawnNextPlatform() {
@@ -78,17 +89,12 @@ function spawnNextPlatform() {
 
   // Randomly decide whether to spawn the platform to the left, right, or straight ahead
   const direction = Math.random(); // Generate a random number between 0 and 1
-  let xOffset, zOffset;
+  let xOffset = 0;
+  let zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Always in front
 
-  if (direction < 0.33) { // Straight ahead
-    xOffset = 0;
-    zOffset = Math.random() * (maxDistance - minDistance) + minDistance;
-  } else if (direction < 0.66) { // To the left
-    xOffset = -(Math.random() * (maxDistance - minDistance) + minDistance);
-    zOffset = Math.random() * (maxDistance - minDistance);
-  } else { // To the right
-    xOffset = Math.random() * (maxDistance - minDistance) + minDistance;
-    zOffset = Math.random() * (maxDistance - minDistance);
+  if (direction < 0.5) { // To the left or right
+    const sideOffset = Math.random() < 0.5 ? -1 : 1; // Choose left (-1) or right (+1)
+    xOffset = sideOffset * (Math.random() * (maxDistance - minDistance) + minDistance);
   }
 
   // Calculate the next platform position
@@ -100,6 +106,7 @@ function spawnNextPlatform() {
   createPlatform(nextX, nextY, nextZ);
   platformCount++;
 }
+
 
 
 // Start button functionality
