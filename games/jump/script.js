@@ -60,7 +60,7 @@ function createPlatform(x, y, z) {
 
   // Outline for the platform
   const outlineGeometry = new THREE.EdgesGeometry(platformGeometry);
-  const outlineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+  const outlineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
   const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
   platform.add(outline);
 
