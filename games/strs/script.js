@@ -1,9 +1,3 @@
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
 let score = 0;
 let health = 100;
 let timeLeft = 60;
@@ -25,7 +19,7 @@ var timer;
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
-    timerDisplay.textContent = `Time left: ${--timeLeft}s`;
+    timerDisplay.textContent = Time left: ${--timeLeft}s;
     if(timeLeft <= 0) {
       gameOver();
     }
@@ -110,7 +104,7 @@ function checkPlayerCollision() {
   enemies.forEach((enemy, eIndex) => {
     if (ship.position.distanceTo(enemy.position) < 0.5) {
       health -= 10;
-      healthDisplay.textContent = `Health: ${health}`;
+      healthDisplay.textContent = Health: ${health};
       scene.remove(enemy);
       enemies.splice(eIndex, 1);
       if (health <= 0) gameOver();
@@ -120,7 +114,7 @@ function checkPlayerCollision() {
 
 function updateScore() {
   score += 10;
-  scoreDisplay.textContent = `Score: ${score}`;
+  scoreDisplay.textContent = Score: ${score};
   if (score % 100 === 0) levelUp();
 }
 
@@ -150,46 +144,15 @@ function wait2Seconds(callback) {
 
 function gameOver() {
     cancelAnimationFrame(animate);
-    clearInterval(timerInterval);
-    clearInterval(createInterval);
+    clearInterval(timer);
 
-    if (score >= 100) {
+    if (score >= 1000) {
         wSound.play();
         alert("You Won! Game over!");
     } else {
         lSound.play();
         alert("You Lost! Game over!");
     }
-
-    setTimeout(() => {
-        // Initialize localStorage leaderboard arrays if not already initialized
-        if (!localStorage.getItem("strs_lb_s") || !localStorage.getItem("strs_lb_n")) {
-            localStorage.setItem("strs_lb_s", "0,0,0,0,0");
-            localStorage.setItem("strs_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
-        }
-
-        // Fetch existing leaderboard data
-        let scores = localStorage.getItem("strs_lb_s").split(",").map(Number);
-        let names = localStorage.getItem("strs_lb_n").split(",");
-
-        // Insert the new score in the correct position
-        for (let i = 0; i < scores.length; i++) {
-            if (score > scores[i]) {
-                scores.splice(i, 0, score);
-                names.splice(i, 0, playerName);
-                break;
-            }
-        }
-
-        scores = scores.slice(0, 5);
-        names = names.slice(0, 5);
-
-        localStorage.setItem("strs_lb_s", scores.join(","));
-        localStorage.setItem("strs_lb_n", names.join(","));
-
-        location.href = "../../leaderboard.html?fetch=strs";
-    }, 2000);
-}
-
-
-
+         wait2Seconds(() => {
+    location.href = "../..";
+})}
