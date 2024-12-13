@@ -17,7 +17,6 @@ const playerGeometry = new THREE.BoxGeometry(1, 2, 1);
 const playerMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const player = new THREE.Mesh(playerGeometry, playerMaterial);
 scene.add(player);
-player.position.set(0, 3, 0);
 
 // Movement variables
 const moveSpeed = 0.1;
@@ -54,50 +53,47 @@ const minYPosition = 1; // Minimum y-position to avoid falling
 let platformCount = 0; // To keep track of platform count
 
 function createPlatform(x, y, z) {
-  // Random color for the platform
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-
-  // Create the platform
+  // Platform geometry and material
   const platformGeometry = new THREE.BoxGeometry(platformSize.width, platformSize.height, platformSize.depth);
-  const platformMaterial = new THREE.MeshBasicMaterial({ color });
+  const platformMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
   const platform = new THREE.Mesh(platformGeometry, platformMaterial);
 
-  // Add an outline
-  const outlineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff }); // White outline
+  // Outline for the platform
   const outlineGeometry = new THREE.EdgesGeometry(platformGeometry);
+  const outlineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
   const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
+  platform.add(outline);
 
-  // Position the platform and its outline
+  // Set position and add to the scene
   platform.position.set(x, y, z);
-  outline.position.set(x, y, z);
-
   scene.add(platform);
-  scene.add(outline);
-
   platforms.push(platform);
 }
+
+// Initial platform
+createPlatform(0, 1, 0);
+platformCount++;
 
 // Generate next platform dynamically
 function spawnNextPlatform() {
   if (platformCount >= 20) return; // Stop spawning after the 20th platform
 
   const lastPlatform = platforms[platforms.length - 1];
+  const direction = Math.random(); // Randomly determine left, right, or straight
+  let xOffset, zOffset;
 
-  // Randomly decide whether to spawn the platform to the left, right, or straight ahead
-  const direction = Math.random(); // Generate a random number between 0 and 1
-  let xOffset = 0;
-  let zOffset = Math.random() * (maxDistance - minDistance) + minDistance; // Always in front
-
-  if (direction < 0.5) { // To the left or right
-    const sideOffset = Math.random() < 0.5 ? -1 : 1; // Choose left (-1) or right (+1)
-    xOffset = sideOffset * (Math.random() * (maxDistance - minDistance) + minDistance);
+  // Ensure platforms spawn in front, slightly to the left, or slightly to the right
+  if (direction < 0.33) {
+    xOffset = 0; // Straight ahead
+  } else if (direction < 0.66) {
+    xOffset = -(Math.random() * (maxDistance - minDistance) + minDistance); // To the left
+  } else {
+    xOffset = Math.random() * (maxDistance - minDistance) + minDistance; // To the right
   }
 
-  // Calculate the next platform position
+  zOffset = Math.random() * (maxDistance - minDistance) + minDistance;
+
+  // Calculate next platform position
   const yOffset = (Math.random() - 0.5) * maxYDifference * 2; // Up or down within maxYDifference
   const nextY = Math.max(lastPlatform.position.y + yOffset, minYPosition);
   const nextX = lastPlatform.position.x + xOffset;
@@ -107,11 +103,10 @@ function spawnNextPlatform() {
   platformCount++;
 }
 
-
-
 // Start button functionality
 document.getElementById('startButton').addEventListener('click', () => {
   document.getElementById('overlay').style.display = 'none';
+  resetPlayer(); // Ensure the player starts on the first platform
   startTimer();
   animate();
 });
@@ -197,7 +192,8 @@ function handleMovement() {
       }
     }
   });
-// If the player is not on any platform and falls
+
+  // If the player is not on any platform and falls
   if (!onPlatform) {
     isOnGround = false;
     if (player.position.y < -5) {
@@ -214,7 +210,8 @@ function handleMovement() {
 
 // Respawn player on the first platform
 function resetPlayer() {
-  player.position.set(0, 3, 0);
+  const firstPlatform = platforms[0];
+  player.position.set(firstPlatform.position.x, firstPlatform.position.y + 1, firstPlatform.position.z);
   velocity = 0;
 }
 
