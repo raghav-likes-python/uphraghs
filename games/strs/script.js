@@ -150,17 +150,46 @@ function wait2Seconds(callback) {
 
 function gameOver() {
     cancelAnimationFrame(animate);
-    clearInterval(timer);
+    clearInterval(timerInterval);
+    clearInterval(createInterval);
 
-    if (score >= 1000) {
+    if (score >= 100) {
         wSound.play();
         alert("You Won! Game over!");
     } else {
         lSound.play();
         alert("You Lost! Game over!");
     }
-         wait2Seconds(() => {
-    location.href = "../..";
-})}
+
+    setTimeout(() => {
+        // Initialize localStorage leaderboard arrays if not already initialized
+        if (!localStorage.getItem("strs_lb_s") || !localStorage.getItem("strs_lb_n")) {
+            localStorage.setItem("strs_lb_s", "0,0,0,0,0");
+            localStorage.setItem("strs_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
+        }
+
+        // Fetch existing leaderboard data
+        let scores = localStorage.getItem("strs_lb_s").split(",").map(Number);
+        let names = localStorage.getItem("strs_lb_n").split(",");
+
+        // Insert the new score in the correct position
+        for (let i = 0; i < scores.length; i++) {
+            if (score > scores[i]) {
+                scores.splice(i, 0, score);
+                names.splice(i, 0, playerName);
+                break;
+            }
+        }
+
+        scores = scores.slice(0, 5);
+        names = names.slice(0, 5);
+
+        localStorage.setItem("strs_lb_s", scores.join(","));
+        localStorage.setItem("strs_lb_n", names.join(","));
+
+        location.href = "../../leaderboard.html?fetch=strs";
+    }, 2000);
+}
+
 
 
