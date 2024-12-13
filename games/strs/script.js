@@ -148,17 +148,52 @@ function wait2Seconds(callback) {
     setTimeout(callback, 2000); // 3000ms = 3 seconds
 }
 
-function gameOver() {
-    cancelAnimationFrame(animate);
-    clearInterval(timer);
+function updateLeaderboard() {
+  const leaderboardKey = 'strs_lb'; // Leaderboard identifier
+  let scores = localStorage.getItem(`${leaderboardKey}_s`) || '0,0,0,0,0';
+  let names = localStorage.getItem(`${leaderboardKey}_n`) || 'Nobody,Nobody,Nobody,Nobody,Nobody';
 
-    if (score >= 1000) {
-        wSound.play();
-        alert("You Won! Game over!");
-    } else {
-        lSound.play();
-        alert("You Lost! Game over!");
-    }
-    wait2Seconds(() => {
-    location.href = "../..";
-})}
+  // Parse scores and names into arrays
+  let scoreArray = scores.split(',').map(Number);
+  let nameArray = names.split(',');
+
+  // Add the current player's score
+  const playerName = prompt('Enter your name:', 'Player'); // Ask for player's name
+  const playerScore = score; // Assume `score` is the game's final score
+  scoreArray.push(playerScore);
+  nameArray.push(playerName || 'Unknown');
+
+  // Sort scores and names together
+  const combined = scoreArray
+    .map((s, i) => ({ score: s, name: nameArray[i] }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5); // Keep top 5
+
+  // Extract sorted scores and names
+  scoreArray = combined.map(entry => entry.score);
+  nameArray = combined.map(entry => entry.name);
+
+  // Save back to localStorage
+  localStorage.setItem(`${leaderboardKey}_s`, scoreArray.join(','));
+  localStorage.setItem(`${leaderboardKey}_n`, nameArray.join(','));
+}
+
+// Call `updateLeaderboard` during game over
+function gameOver() {
+  cancelAnimationFrame(animate);
+  clearInterval(timer);
+
+  if (score >= 1000) {
+    wSound.play();
+    alert('You Won! Game over!');
+  } else {
+    lSound.play();
+    alert('You Lost! Game over!');
+  }
+
+  updateLeaderboard(); // Update leaderboard after the game ends
+  wait2Seconds(() => {
+    location.href = '../..';
+  });
+}
+
