@@ -41,6 +41,7 @@ function getRandomColor() {
     }
 }
 
+
 function createBalloon() {
     if (balloons.length >= 20) return; 
 
@@ -114,6 +115,14 @@ function onMouseDown(event) {
     }
 }
 
+// function $alert(_title,_text,_button) {
+//     title.innerHTML = _title ? _title : "Alert!";
+//     text.innerHTML = _text;
+//     button.innerHTML = _button ? _button : "Okay!";
+
+//     wrap.style.display = "block";
+// }
+
 function updateTimer() {
     if (timeLeft > 0) {
         timeLeft--;
@@ -124,7 +133,7 @@ function updateTimer() {
 }
 
 function wait2Seconds(callback) {
-    setTimeout(callback, 2000); // 2000ms = 2 seconds
+    setTimeout(callback, 2000); // 3000ms = 3 seconds
 }
 
 function endGame() {
@@ -139,35 +148,34 @@ function endGame() {
         lSound.play();
         alert("You Lost! Game over!");
     }
-    wait2Seconds(() => {
-        // Initialize leaderboard arrays if not already initialized
-        if (!localStorage.getItem("blnp_lb_s") || !localStorage.getItem("blnp_lb_n")) {
-            localStorage.setItem("blnp_lb_s", "0,0,0,0,0");
-            localStorage.setItem("blnp_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
+     wait2Seconds(() => {
+    // Initialize localStorage leaderboard arrays if not already initialized
+    if (!localStorage.getItem("blnp_lb_s") || !localStorage.getItem("blnp_lb_n")) {
+        localStorage.setItem("blnp_lb_s", "0,0,0,0,0");
+        localStorage.setItem("blnp_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
+    }
+
+    // Fetch existing leaderboard data
+    let scores = localStorage.getItem("blnp_lb_s").split(",").map(Number);
+    let names = localStorage.getItem("blnp_lb_n").split(",");
+
+    // Insert the new score in the correct position
+    for (let i = 0; i < scores.length; i++) {
+        if (score > scores[i]) {
+            scores.splice(i, 0, score);
+            names.splice(i, 0, playerName);
+            break;
         }
+    }
 
-        // Fetch existing leaderboard data
-        let scores = localStorage.getItem("blnp_lb_s").split(",").map(Number);
-        let names = localStorage.getItem("blnp_lb_n").split(",");
+    scores = scores.slice(0, 5);
+    names = names.slice(0, 5);
 
-        // Insert the new score in the correct position
-        for (let i = 0; i < scores.length; i++) {
-            if (score > scores[i]) {
-                scores.splice(i, 0, score);
-                names.splice(i, 0, playerName);
-                break;
-            }
-        }
+    localStorage.setItem("blnp_lb_s", scores.join(","));
+    localStorage.setItem("blnp_lb_n", names.join(","));
 
-        scores = scores.slice(0, 5);
-        names = names.slice(0, 5);
-
-        localStorage.setItem("blnp_lb_s", scores.join(","));
-        localStorage.setItem("blnp_lb_n", names.join(","));
-
-        location.href = "../.."; // Redirect or navigate to another page
-    });
-}
+    location.href = "../..";
+})}
 
 function fetchTopScores() {
     const head = document.getElementById("head");
@@ -179,19 +187,16 @@ function fetchTopScores() {
     if (localStorage.getItem("blnp_lb_s") && localStorage.getItem("blnp_lb_n")) {
         _lb_s = localStorage.blnp_lb_s.split(",");
         _lb_n = localStorage.blnp_lb_n.split(",");
-    } else if (localStorage.getItem("strs_lb_s") && localStorage.getItem("strs_lb_n")) {
-        _lb_s = localStorage.strs_lb_s.split(",");
-        _lb_n = localStorage.strs_lb_n.split(",");
     }
 
     // Update leaderboard display
-    list.innerHTML = `
+    list.innerHTML = 
         <li>${_lb_n[0]}: ${Number(_lb_s[0])}</li>
         <li>${_lb_n[1]}: ${Number(_lb_s[1])}</li>
         <li>${_lb_n[2]}: ${Number(_lb_s[2])}</li>
         <li>${_lb_n[3]}: ${Number(_lb_s[3])}</li>
         <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>
-    `;
+    ;
 }
 
 function startGame() {
@@ -220,6 +225,7 @@ function animate() {
 }
 
 startButton.addEventListener('click', () => {startGame();});
+
 
 function fetchTotalPlayers() {
     // fetch('/get_total_players')
