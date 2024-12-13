@@ -152,7 +152,7 @@ function gameOver() {
     cancelAnimationFrame(animate);
     clearInterval(timer);
 
-    const playerName = localStorage.plrName || "Unknown Player"; // Use localStorage.plrName or default to 'Unknown Player'
+    const playerName = localStorage.plrName
     updateLeaderboard(playerName, score); // Update leaderboard with the current score
 
     if (score >= 1000) {
