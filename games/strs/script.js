@@ -148,52 +148,45 @@ function wait2Seconds(callback) {
     setTimeout(callback, 2000); // 3000ms = 3 seconds
 }
 
-function updateLeaderboard() {
-  const leaderboardKey = 'strs_lb'; // Leaderboard identifier
-  let scores = localStorage.getItem(`${leaderboardKey}_s`) || '0,0,0,0,0';
-  let names = localStorage.getItem(`${leaderboardKey}_n`) || 'Nobody,Nobody,Nobody,Nobody,Nobody';
-
-  // Parse scores and names into arrays
-  let scoreArray = scores.split(',').map(Number);
-  let nameArray = names.split(',');
-
-  // Add the current player's score
-  const playerName = prompt('Enter your name:', 'Player'); // Ask for player's name
-  const playerScore = score; // Assume `score` is the game's final score
-  scoreArray.push(playerScore);
-  nameArray.push(playerName || 'Unknown');
-
-  // Sort scores and names together
-  const combined = scoreArray
-    .map((s, i) => ({ score: s, name: nameArray[i] }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 5); // Keep top 5
-
-  // Extract sorted scores and names
-  scoreArray = combined.map(entry => entry.score);
-  nameArray = combined.map(entry => entry.name);
-
-  // Save back to localStorage
-  localStorage.setItem(`${leaderboardKey}_s`, scoreArray.join(','));
-  localStorage.setItem(`${leaderboardKey}_n`, nameArray.join(','));
-}
-
-// Call `updateLeaderboard` during game over
 function gameOver() {
-  cancelAnimationFrame(animate);
-  clearInterval(timer);
+    cancelAnimationFrame(animate);
+    clearInterval(timer);
 
-  if (score >= 1000) {
-    wSound.play();
-    alert('You Won! Game over!');
-  } else {
-    lSound.play();
-    alert('You Lost! Game over!');
-  }
+    const playerName = localStorage.plrName || "Unknown Player"; // Use localStorage.plrName or default to 'Unknown Player'
+    updateLeaderboard(playerName, score); // Update leaderboard with the current score
 
-  updateLeaderboard(); // Update leaderboard after the game ends
-  wait2Seconds(() => {
-    location.href = '../..';
-  });
+    if (score >= 1000) {
+        wSound.play();
+        alert("You Won! Game over!");
+    } else {
+        lSound.play();
+        alert("You Lost! Game over!");
+    }
+
+    wait2Seconds(() => {
+        location.href = "../.."; // Redirect to the main menu
+    });
 }
 
+// Update leaderboard without modifying leaderboard code
+function updateLeaderboard(name, score) {
+    let _lb_n = localStorage.strs_lb_n ? localStorage.strs_lb_n.split(",") : ['Nobody', 'Nobody', 'Nobody', 'Nobody', 'Nobody'];
+    let _lb_s = localStorage.strs_lb_s ? localStorage.strs_lb_s.split(",").map(Number) : [0, 0, 0, 0, 0];
+
+    // Add the current player
+    _lb_n.push(name);
+    _lb_s.push(score);
+
+    // Sort scores in descending order
+    const sortedIndices = _lb_s.map((s, i) => i).sort((a, b) => _lb_s[b] - _lb_s[a]);
+    _lb_n = sortedIndices.map(i => _lb_n[i]);
+    _lb_s = sortedIndices.map(i => _lb_s[i]);
+
+    // Keep only the top 5
+    _lb_n = _lb_n.slice(0, 5);
+    _lb_s = _lb_s.slice(0, 5);
+
+    // Save updated leaderboard back to localStorage
+    localStorage.strs_lb_n = _lb_n.join(",");
+    localStorage.strs_lb_s = _lb_s.join(",");
+}
