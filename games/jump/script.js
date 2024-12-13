@@ -64,7 +64,7 @@ function createPlatform(x, y, z) {
 
   for (let i = 0; i < 3; i++) { 
     const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
-    outline.scale.set(1 + i * 0.01, 1 + i * 0.01, 1 + i * 0.01); // Slightly scale each layer
+    outline.scale.set(1 + i * 0.01, 1 + i * 0.01, 1 + i * 0.01); 
     platform.add(outline);
   }
 
