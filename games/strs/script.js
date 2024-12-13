@@ -25,7 +25,7 @@ var timer;
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
-    timerDisplay.textContent = `Time left: ${--timeLeft}s`;
+    timerDisplay.textContent = Time left: ${--timeLeft}s;
     if(timeLeft <= 0) {
       gameOver();
     }
@@ -110,7 +110,7 @@ function checkPlayerCollision() {
   enemies.forEach((enemy, eIndex) => {
     if (ship.position.distanceTo(enemy.position) < 0.5) {
       health -= 10;
-      healthDisplay.textContent = `Health: ${health}`;
+      healthDisplay.textContent = Health: ${health};
       scene.remove(enemy);
       enemies.splice(eIndex, 1);
       if (health <= 0) gameOver();
@@ -120,7 +120,7 @@ function checkPlayerCollision() {
 
 function updateScore() {
   score += 10;
-  scoreDisplay.textContent = `Score: ${score}`;
+  scoreDisplay.textContent = Score: ${score};
   if (score % 100 === 0) levelUp();
 }
 
@@ -152,9 +152,6 @@ function gameOver() {
     cancelAnimationFrame(animate);
     clearInterval(timer);
 
-    const playerName = localStorage.plrName 
-    updateLeaderboard(playerName, score); // Update leaderboard
-
     if (score >= 1000) {
         wSound.play();
         alert("You Won! Game over!");
@@ -162,32 +159,6 @@ function gameOver() {
         lSound.play();
         alert("You Lost! Game over!");
     }
-
     wait2Seconds(() => {
-        location.href = "../.."; // Redirect after game ends
-    });
-}
-
-// Update leaderboard
-function updateLeaderboard(name, score) {
-    let _lb_n = localStorage.strs_lb_n ? localStorage.strs_lb_n.split(",") : ['Nobody', 'Nobody', 'Nobody', 'Nobody', 'Nobody'];
-    let _lb_s = localStorage.strs_lb_s ? localStorage.strs_lb_s.split(",").map(Number) : [0, 0, 0, 0, 0];
-
-    // Add current player's name and score
-    _lb_n.push(name);
-    _lb_s.push(score);
-
-    // Sort scores in descending order
-    const sortedIndices = _lb_s.map((s, i) => i).sort((a, b) => _lb_s[b] - _lb_s[a]);
-    _lb_n = sortedIndices.map(i => _lb_n[i]);
-    _lb_s = sortedIndices.map(i => _lb_s[i]);
-
-    // Keep top 5 scores
-    _lb_n = _lb_n.slice(0, 5);
-    _lb_s = _lb_s.slice(0, 5);
-
-    // Save back to localStorage
-    localStorage.strs_lb_n = _lb_n.join(",");
-    localStorage.strs_lb_s = _lb_s.join(",");
-}
-
+    location.href = "../..";
+})}
