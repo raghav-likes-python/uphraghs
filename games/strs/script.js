@@ -25,7 +25,7 @@ var timer;
 function startGame() {
   document.getElementById('overlay').style.display = 'none';
   timer = setInterval(function() {
-    timerDisplay.textContent = Time left: ${--timeLeft}s;
+    timerDisplay.textContent = `Time left: ${--timeLeft}s`;
     if(timeLeft <= 0) {
       gameOver();
     }
