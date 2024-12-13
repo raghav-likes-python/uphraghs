@@ -58,17 +58,22 @@ function createPlatform(x, y, z) {
   const platformMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
   const platform = new THREE.Mesh(platformGeometry, platformMaterial);
 
-  // Outline for the platform
+  // Create a thick outline by layering multiple slightly scaled outlines
   const outlineGeometry = new THREE.EdgesGeometry(platformGeometry);
   const outlineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-  const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
-  platform.add(outline);
+
+  for (let i = 0; i < 3; i++) { 
+    const outline = new THREE.LineSegments(outlineGeometry, outlineMaterial);
+    outline.scale.set(1 + i * 0.01, 1 + i * 0.01, 1 + i * 0.01); // Slightly scale each layer
+    platform.add(outline);
+  }
 
   // Set position and add to the scene
   platform.position.set(x, y, z);
   scene.add(platform);
   platforms.push(platform);
 }
+
 
 // Initial platform
 createPlatform(0, 1, 0);
