@@ -190,12 +190,12 @@ function fetchTopScores() {
     }
 
     // Update leaderboard display
-    list.innerHTML = 
+    list.innerHTML = `
         <li>${_lb_n[0]}: ${Number(_lb_s[0])}</li>
         <li>${_lb_n[1]}: ${Number(_lb_s[1])}</li>
         <li>${_lb_n[2]}: ${Number(_lb_s[2])}</li>
         <li>${_lb_n[3]}: ${Number(_lb_s[3])}</li>
-        <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>
+        <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>`
     ;
 }
 
