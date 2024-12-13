@@ -110,7 +110,7 @@ function checkPlayerCollision() {
   enemies.forEach((enemy, eIndex) => {
     if (ship.position.distanceTo(enemy.position) < 0.5) {
       health -= 10;
-      healthDisplay.textContent = Health: ${health};
+      healthDisplay.textContent = `Health: ${health}`;
       scene.remove(enemy);
       enemies.splice(eIndex, 1);
       if (health <= 0) gameOver();
