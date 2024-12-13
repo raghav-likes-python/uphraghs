@@ -152,7 +152,7 @@ function gameOver() {
     cancelAnimationFrame(animate);
     clearInterval(timer);
 
-    if (score >= 1000) {
+    if (score >= 500) {
         wSound.play();
         alert("You Won! Game over!");
     } else {
