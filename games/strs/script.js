@@ -160,52 +160,7 @@ function gameOver() {
         alert("You Lost! Game over!");
     }
          wait2Seconds(() => {
-    // Initialize localStorage leaderboard arrays if not already initialized
-    if (!localStorage.getItem("strs_lb_s") || !localStorage.getItem("strs_lb_n")) {
-        localStorage.setItem("strs_lb_s", "0,0,0,0,0");
-        localStorage.setItem("strs_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
-    }
-
-    // Fetch existing leaderboard data
-    let scores = localStorage.getItem("strs_lb_s").split(",").map(Number);
-    let names = localStorage.getItem("strs_lb_n").split(",");
-
-    // Insert the new score in the correct position
-    for (let i = 0; i < scores.length; i++) {
-        if (score > scores[i]) {
-            scores.splice(i, 0, score);
-            names.splice(i, 0, playerName);
-            break;
-        }
-    }
-
-    scores = scores.slice(0, 5);
-    names = names.slice(0, 5);
-
-    localStorage.setItem("strs_lb_s", scores.join(","));
-    localStorage.setItem("strs_lb_n", names.join(","));
-
     location.href = "../..";
 })}
 
-function fetchTopScores() {
-    const head = document.getElementById("head");
-    const list = document.getElementById("list");
-    let _lb_n = ['Nobody', 'Nobody', 'Nobody', 'Nobody', 'Nobody'];
-    let _lb_s = [0, 0, 0, 0, 0];
 
-    // Fetch leaderboard data from localStorage
-    if (localStorage.getItem("strs_lb_s") && localStorage.getItem("strs_lb_n")) {
-        _lb_s = localStorage.strs_lb_s.split(",");
-        _lb_n = localStorage.strs_lb_n.split(",");
-    }
-
-    // Update leaderboard display
-    list.innerHTML = `
-        <li>${_lb_n[0]}: ${Number(_lb_s[0])}</li>
-        <li>${_lb_n[1]}: ${Number(_lb_s[1])}</li>
-        <li>${_lb_n[2]}: ${Number(_lb_s[2])}</li>
-        <li>${_lb_n[3]}: ${Number(_lb_s[3])}</li>
-        <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>`
-    ;
-}
