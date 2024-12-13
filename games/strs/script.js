@@ -120,7 +120,7 @@ function checkPlayerCollision() {
 
 function updateScore() {
   score += 10;
-  scoreDisplay.textContent = Score: ${score};
+  scoreDisplay.textContent = `Score: ${score}`;
   if (score % 100 === 0) levelUp();
 }
 
