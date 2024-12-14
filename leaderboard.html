@@ -32,7 +32,7 @@
         let _lb_s = [0,0,0,0,0];
         if(query.includes("showHeading")) head.style.display = "block";
         if(query.includes("forceInit")) {}
-        if(query[0].slice(0,4) == "fetch=") {}
+        if(query[0].slice(0,4) == "fetch=") {
         switch(query[0].slice(6)) {
             case "blnp":
                 _lb_s = localStorage.blnp_lb_s.split(",");
@@ -59,6 +59,7 @@
             <li>${_lb_n[3]}: ${Number(_lb_s[3])}</li>
             <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>
             `;
+        }
     </script>
 </body>
 </html>
