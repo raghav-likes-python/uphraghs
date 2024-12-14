@@ -174,7 +174,7 @@ function gameOver() {
     for (let i = 0; i < scores.length; i++) {
         if (score > scores[i]) {
             scores.splice(i, 0, score);
-            names.splice(i, 0, playerName);
+            names.splice(i, 0, localStorage.plrName);
             break;
         }
     }
