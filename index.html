@@ -61,9 +61,33 @@
                 height: 5vh;
                 width: 5vh;
             }
+
+            #win-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+            #win-overlay video {
+                width: 100%;
+                height: auto;
+            }
         </style>
     </head>
     <body>
+        <div id="win-overlay">
+            <video autoplay muted>
+                <source src="assets/win.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
         <div id="prompt_w">
             <h1 id="prompt-h">Whats your name?</h1>
             <input id="prompt_i" placeholder="Answer here..." onchange="prompted();" />
@@ -115,6 +139,13 @@
 
     if (localStorage.plrQuota > 0) {
         document.getElementById('prompt_w').hidden = true;
+    }
+
+    if (localStorage.gameswon == 3) {
+        document.getElementById('win-overlay').style.display = "flex";
+        setTimeout(() => {
+            document.getElementById('win-overlay').style.display = "none";
+        }, 10000);
     }
 </script>
     </body>
