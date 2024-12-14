@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
+    <style>
+        body {
+            /* shud i add config for this using get reqs? */
+            color: white;
+            background-color: transparent; 
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
-<style>
-    body {
-        color: white;
-        background-color: transparent;
-        font-family: Arial, sans-serif;
-    }
-</style>
+<body>
     <h1 id="head">Leaderboard</h1>
     <ol id="list">
         <li>Nobody: 0</li>
@@ -21,44 +23,33 @@
         <li>Nobody: 0</li>
     </ol>
     <script>
-        const doFirstInit = false;
-        if(doFirstInit && !(localStorage.getItem("blnp_lb_s") && localStorage.getItem("strs_lb_s") && localStorage.getItem("jump_lb_s"))) {}
+        // const doFirstInit = false;
+        // if(doFirstInit && !(localStorage.getItem("blnp_lb_s") && localStorage.getItem("strs_lb_s") && localStorage.getItem("jump_lb_s"))) {}
         const head = document.getElementById("head");
         const list = document.getElementById("list");
-        head.style.display = "none";
+        head.style.display = "block";
 
         const query = location.search.slice(1).split('&');
         let _lb_n = ['Nobody','Nobody','Nobody','Nobody','Nobody',];
         let _lb_s = [0,0,0,0,0];
-        if(query.includes("showHeading")) head.style.display = "block";
-        if(query.includes("forceInit")) {}
-        if(query[0].slice(0,4) == "fetch=") {}
-        switch(query[0].slice(6)) {
-            case "blnp":
-                _lb_s = localStorage.blnp_lb_s.split(",");
-                _lb_n = localStorage.blnp_lb_n.split(",");
-            break;
-            case "strs":
-                _lb_s = localStorage.strs_lb_s.split(",");
-                _lb_n = localStorage.blnp_lb_n.split(",");
-            break;
-            case "jump":
-                _lb_s = localStorage.jump_lb_s.split(",");
-                _lb_n = localStorage.blnp_lb_n.split(",");
-            break;
-            default:
-                list.style.display = "none";
-                head.style.display = "block";
-                head.innerHTML = "Invalid leaderboard database reference location.";
-            }
-            list.innerHTML = `
-            <center>Leaderboard</center>
-            <li>${_lb_n[0]}: ${Number(_lb_s[0])}</li>
-            <li>${_lb_n[1]}: ${Number(_lb_s[1])}</li>
-            <li>${_lb_n[2]}: ${Number(_lb_s[2])}</li>
-            <li>${_lb_n[3]}: ${Number(_lb_s[3])}</li>
-            <li>${_lb_n[4]}: ${Number(_lb_s[4])}</li>
-            `;
+        if(query.includes("hideHeading")) head.style.display = "none";
+        // if(query.includes("forceInit")) {}
+        if(query[0].substr(0,6) == "fetch=") {
+            const game = query[0].substr(6,10);
+            if(["jump", "strs", "blnp"].includes(game)) {
+                console.log("if there is an error log saying it cannot split below, then init is not done raghs");
+                const __n = localStorage.getItem(game + "_lb_n").split(",");
+                const __s = localStorage.getItem(game + "_lb_s").split(",");
+
+                list.innerHTML = `
+                <li>${__n[0]}: ${__s[0]}</li>
+                <li>${__n[1]}: ${__s[1]}</li>
+                <li>${__n[2]}: ${__s[2]}</li>
+                <li>${__n[3]}: ${__s[3]}</li>
+                <li>${__n[4]}: ${__s[4]}</li>
+                `;
+            } else console.error("bro what game are you getting leaderboard for???\nvalid games: blnp, strs, jump");
+        }
     </script>
 </body>
 </html>
