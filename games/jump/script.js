@@ -145,6 +145,7 @@ function winGameOver() {
   clearInterval(timerInterval);
   wSound.play();
   alert("Game Over! You Won!");
+  localStorage.gameswon++
   location.href = "../..";
 }
 
