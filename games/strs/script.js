@@ -161,14 +161,14 @@ function gameOver() {
     }
      wait2Seconds(() => {
     // Initialize localStorage leaderboard arrays if not already initialized
-    if (!localStorage.getItem("blnp_lb_s") || !localStorage.getItem("blnp_lb_n")) {
-        localStorage.setItem("blnp_lb_s", "0,0,0,0,0");
-        localStorage.setItem("blnp_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
+    if (!localStorage.getItem("strs_lb_s") || !localStorage.getItem("strs_lb_n")) {
+        localStorage.setItem("strs_lb_s", "0,0,0,0,0");
+        localStorage.setItem("strs_lb_n", "Nobody,Nobody,Nobody,Nobody,Nobody");
     }
 
     // Fetch existing leaderboard data
-    let scores = localStorage.getItem("blnp_lb_s").split(",").map(Number);
-    let names = localStorage.getItem("blnp_lb_n").split(",");
+    let scores = localStorage.getItem("strs_lb_s").split(",").map(Number);
+    let names = localStorage.getItem("strs_lb_n").split(",");
 
     // Insert the new score in the correct position
     for (let i = 0; i < scores.length; i++) {
@@ -182,8 +182,8 @@ function gameOver() {
     scores = scores.slice(0, 5);
     names = names.slice(0, 5);
 
-    localStorage.setItem("blnp_lb_s", scores.join(","));
-    localStorage.setItem("blnp_lb_n", names.join(","));
+    localStorage.setItem("strs_lb_s", scores.join(","));
+    localStorage.setItem("strs_lb_n", names.join(","));
 
     location.href = "../..";
 })}
@@ -195,9 +195,9 @@ function fetchTopScores() {
     let _lb_s = [0, 0, 0, 0, 0];
 
     // Fetch leaderboard data from localStorage
-    if (localStorage.getItem("blnp_lb_s") && localStorage.getItem("blnp_lb_n")) {
-        _lb_s = localStorage.blnp_lb_s.split(",");
-        _lb_n = localStorage.blnp_lb_n.split(",");
+    if (localStorage.getItem("strs_lb_s") && localStorage.getItem("strs_lb_n")) {
+        _lb_s = localStorage.strs_lb_s.split(",");
+        _lb_n = localStorage.strs_lb_n.split(",");
     }
 
     // Update leaderboard display
