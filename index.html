@@ -81,36 +81,41 @@
             <span id="intro-count_w"><span id="intro-count">0</span> people have played these games so far.</span>
             <span id="intro-creds">Made with &heartsuit; by <u>Chayan</u>,<u>Raghav</u> and <u>Ajay</u>.</span>
         </div>
-        <script>
-            /*
-            code names
-            balloon pop - blnp
-            star shoot - strs
-            3d platformer - jump
-            */ 
-            document.getElementById('intro-count').innerHTML = Number(localStorage.blnp_cnt + localStorage.strs_cnt + localStorage.jump_cnt);
-            // localStorage.setItem('plrcount', Number(localStorage.getItem('plrcount')) + 1);
-            // or u could just do localstorage.plrcount++ lol
-            if(location.search=="?devmode=true") {
-                document.getElementById('prompt_i').value = "Developer";
-                prompted();
-            }
-            function prompted() {
-                if(document.getElementById('prompt_i').value.trim()) {
-                    localStorage.plrName = document.getElementById('prompt_i').value;
-                    localStorage.plrQuota = 3;
-                    document.getElementById('prompt_w').hidden = true;
-                    document.getElementById('intro-quota').innerHTML = 3;
-                }
-            }
+<script>
+    /*
+    code names
+    balloon pop - blnp
+    star shoot - strs
+    3d platformer - jump
+    */
+    document.getElementById('intro-count').innerHTML = Number(localStorage.blnp_cnt || 0) + Number(localStorage.strs_cnt || 0) + Number(localStorage.jump_cnt || 0);
+    
+    // Developer mode handling
+    if (location.search == "?devmode=true") {
+        document.getElementById('prompt_i').value = "Developer";
+        prompted();
+    }
 
-            localStorage.plrQuota = localStorage.plrQuota-- > 0 ? localStorage.plrQuota : 0;
-            document.getElementById('intro-quota').innerHTML = localStorage.plrQuota;
+    function prompted() {
+        if (document.getElementById('prompt_i').value.trim()) {
+            localStorage.plrName = document.getElementById('prompt_i').value;
+            localStorage.plrQuota = 3; 
+            localStorage.gameswon = 0; 
+            document.getElementById('prompt_w').hidden = true;
+            document.getElementById('intro-quota').innerHTML = 3;
+        }
+    }
 
-            if(localStorage.plrQuota > 0) {
-                // console.log('worked');
-                document.getElementById('prompt_w').hidden = true;
-            }
-        </script>
+    localStorage.plrQuota = Math.max(localStorage.plrQuota - 1, 0);
+    document.getElementById('intro-quota').innerHTML = localStorage.plrQuota;
+
+    if (localStorage.plrQuota <= 0) {
+        localStorage.gameswon = 0; 
+    }
+
+    if (localStorage.plrQuota > 0) {
+        document.getElementById('prompt_w').hidden = true;
+    }
+</script>
     </body>
 </html>
