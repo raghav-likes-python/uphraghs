@@ -155,6 +155,7 @@ function gameOver() {
     if (score >= 500) {
         wSound.play();
         alert("You Won! Game over!");
+        localStorage.gameswon++
     } else {
         lSound.play();
         alert("You Lost! Game over!");
