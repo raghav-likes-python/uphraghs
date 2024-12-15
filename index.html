@@ -88,6 +88,16 @@
                 Your browser does not support the video tag.
             </video>
         </div>
+        <div id="lose-overlay">
+            <video autoplay muted>
+                <source src="assets/lose.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div id="def-overlay">
+            <h1>Your chances are over.</h1>
+            <button id="def-button">Let's see how you did</button>
+        </div>
         <div id="prompt_w">
             <h1 id="prompt-h">Whats your name?</h1>
             <input id="prompt_i" placeholder="Answer here..." onchange="prompted();" />
@@ -133,15 +143,19 @@
     localStorage.plrQuota = Math.max(localStorage.plrQuota - 1, 0);
     document.getElementById('intro-quota').innerHTML = localStorage.plrQuota;
 
-    if (localStorage.plrQuota > 0) {
         document.getElementById('prompt_w').hidden = true;
-    }
 
-    if (localStorage.gameswon == 3) {
-        document.getElementById('win-overlay').style.display = "flex";
+        
+
+    if(localStorage.plrQuota > 0) {
+        document.getElementById("def-button").onclick = (localStorage.gameswon == 3 ? 'document.getElementById('win-overlay').style.display = "flex";
         setTimeout(() => {
             document.getElementById('win-overlay').style.display = "none";
-        }, 10000);
+        }, 10000);' : 'document.getElementById('lose-overlay').style.display = "flex";
+        setTimeout(() => {
+            document.getElementById('lose-overlay').style.display = "none";
+        }, 10000);') + "document.getElementById('def-overlay').style.display = 'none';";
+        document.getElementById('def-overlay').style.display = 'none';
     }
 </script>
     </body>
