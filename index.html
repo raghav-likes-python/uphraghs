@@ -79,6 +79,16 @@
                 width: 100%;
                 height: auto;
             }
+
+            #def-overlay {
+                width: 100vw;
+                height: 100vh;
+                position: absolute;
+                z-index: 100000;
+                display: flex;
+                justify-content: center;
+                margin: auto;
+            }
         </style>
     </head>
     <body>
@@ -94,9 +104,9 @@
                 Your browser does not support the video tag.
             </video>
         </div>
-        <div id="def-overlay">
+        <div id="def-overlay" style="display: none;">
             <h1>Your chances are over.</h1>
-            <button id="def-button">Let's see how you did</button>
+            <button id="def-button" onclick="document.getElementById('def-overlay').style.display = 'none'">Let's see how you did</button>
         </div>
         <div id="prompt_w">
             <h1 id="prompt-h">Whats your name?</h1>
@@ -148,14 +158,14 @@
         
 
     if(localStorage.plrQuota > 0) {
-        document.getElementById("def-button").onclick = (localStorage.gameswon == 3 ? 'document.getElementById('win-overlay').style.display = "flex";
+        document.getElementById("def-button").onclick = document.getElementById("def-button").onclick + (localStorage.gameswon == 3 ? 'document.getElementById('win-overlay').style.display = "flex";
         setTimeout(() => {
             document.getElementById('win-overlay').style.display = "none";
         }, 10000);' : 'document.getElementById('lose-overlay').style.display = "flex";
         setTimeout(() => {
             document.getElementById('lose-overlay').style.display = "none";
-        }, 10000);') + "document.getElementById('def-overlay').style.display = 'none';";
-        document.getElementById('def-overlay').style.display = 'none';
+        }, 10000);')";
+        document.getElementById('def-overlay').style.display = 'block';
     }
 </script>
     </body>
