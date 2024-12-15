@@ -133,10 +133,6 @@
     localStorage.plrQuota = Math.max(localStorage.plrQuota - 1, 0);
     document.getElementById('intro-quota').innerHTML = localStorage.plrQuota;
 
-    if (localStorage.plrQuota <= 0) {
-        localStorage.gameswon = 0; 
-    }
-
     if (localStorage.plrQuota > 0) {
         document.getElementById('prompt_w').hidden = true;
     }
