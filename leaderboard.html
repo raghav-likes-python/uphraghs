@@ -34,7 +34,7 @@
         let _lb_n = ['Nobody','Nobody','Nobody','Nobody','Nobody',];
         let _lb_s = [0,0,0,0,0];
         if(query.includes("hideHeading")) head.style.display = "none";
-        // if(query.includes("forceInit")) {}
+        if(query.includes("forceInit")) { forceInit() };
         if(query[0].substr(0,6) == "fetch=") {
             const game = query[0].substr(6,10);
             if(["jump", "strs", "blnp"].includes(game)) {
@@ -50,6 +50,16 @@
                 <li>${__n[4]}: ${__s[4]}</li>
                 `;
             } else console.error("bro what game are you getting leaderboard for???\nvalid games: blnp, strs, jump");
+        }
+
+        // adding this function a year later was a pain in the ass thanks younger catrophie
+        function forceInit() {
+            localStorage.setItem("blnp_lb_n",["Nobody","Nobody","Nobody","Nobody","Nobody"]);
+            localStorage.setItem("jump_lb_n",["Nobody","Nobody","Nobody","Nobody","Nobody"]);
+            localStorage.setItem("strs_lb_n",["Nobody","Nobody","Nobody","Nobody","Nobody"]);
+            localStorage.setItem("blnp_lb_s",[0,0,0,0,0]);
+            localStorage.setItem("jump_lb_s",[0,0,0,0,0]);
+            localStorage.setItem("strs_lb_s",[0,0,0,0,0]);
         }
     </script>
 </body>
