@@ -3,6 +3,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+const loader = new THREE.GLTFLoader();
 
 let score = 0;
 let health = 100;
@@ -67,19 +68,20 @@ function shootBullet() {
 
 const enemies = [];
 function spawnEnemy() {
-  const enemyGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-  const enemyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-  const enemy = new THREE.Mesh(enemyGeometry, enemyMaterial);
-  enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
-  scene.add(enemy);
-  enemies.push(enemy);
-
-  // loader.load('../../assets/strs/meteor/scene.gltf', function (gltf) {
-  //   const enemy = gltf.scene;
-  //   enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);  // Spawn at player's Y
-  //   scene.add(enemy);
-  //   enemies.push(enemy);
-  // });
+  loader.load(
+    '../../assets/strs/meteor/scene.gltf',
+    function (gltf) {
+      const enemy = gltf.scene.clone();
+      enemy.position.set((Math.random() - 0.5) * 10, ship.position.y, -10);
+      enemy.scale.set(0.5, 0.5, 0.5);
+      scene.add(enemy);
+      enemies.push(enemy);
+    },
+    undefined,
+    function (error) {
+      console.error('im a stupid threejs and im crying about:', error);
+    }
+  );
 }
 
 // Movement and Collision Detection
